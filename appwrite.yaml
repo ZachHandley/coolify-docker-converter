@@ -1,0 +1,1417 @@
+x-logging: &x-logging
+  logging:
+    driver: 'json-file'
+    options:
+      max-file: '5'
+      max-size: '10m'
+version: '3'
+
+services:
+  $$id:
+    image: appwrite/appwrite:$$core_version
+    container_name: $$id
+    <<: *x-logging
+    restart: unless-stopped
+    volumes:
+      - $$id-uploads:/storage/uploads:rw
+      - $$id-cache:/storage/cache:rw
+      - $$id-config:/storage/config:rw
+      - $$id-certificates:/storage/certificates:rw
+      - $$id-functions:/storage/functions:rw
+    depends_on:
+      - $$id-mariadb
+      - $$id-redis
+#      - clamav
+      - $$id-influxdb
+    environment:
+      - _APP_ENV=$$config__app_env
+      - _APP_WORKER_PER_CORE=$$config__app_worker_per_core
+      - _APP_LOCALE=$$config__app_locale
+      - _APP_CONSOLE_WHITELIST_ROOT=$$config__app_console_whitelist_root
+      - _APP_CONSOLE_WHITELIST_EMAILS=$$config__app_console_whitelist_emails
+      - _APP_CONSOLE_WHITELIST_IPS=$$config__app_console_whitelist_ips
+      - _APP_SYSTEM_EMAIL_NAME=$$config__app_system_email_name
+      - _APP_SYSTEM_EMAIL_ADDRESS=$$config__app_system_email_address
+      - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS=$$config__app_system_security_email_address
+      - _APP_SYSTEM_RESPONSE_FORMAT=$$config__app_system_response_format
+      - _APP_OPTIONS_ABUSE=$$config__app_options_abuse
+      - _APP_OPTIONS_FORCE_HTTPS=$$config__app_options_force_https
+      - _APP_OPENSSL_KEY_V1=$$config__app_openssl_key_v1
+      - _APP_DOMAIN=$$config__app_domain
+      - _APP_DOMAIN_TARGET=$$config__app_domain_target
+      - _APP_DOMAIN_FUNCTIONS=$$config__app_domain_functions
+      - _APP_REDIS_HOST=$$config__app_redis_host
+      - _APP_REDIS_PORT=$$config__app_redis_port
+      - _APP_REDIS_USER=$$config__app_redis_user
+      - _APP_REDIS_PASS=$$config__app_redis_pass
+      - _APP_DB_HOST=$$config__app_db_host
+      - _APP_DB_PORT=$$config__app_db_port
+      - _APP_DB_SCHEMA=$$config__app_db_schema
+      - _APP_DB_USER=$$config__app_db_user
+      - _APP_DB_PASS=$$config__app_db_pass
+      - _APP_SMTP_HOST=$$config__app_smtp_host
+      - _APP_SMTP_PORT=$$config__app_smtp_port
+      - _APP_SMTP_SECURE=$$config__app_smtp_secure
+      - _APP_SMTP_USERNAME=$$config__app_smtp_username
+      - _APP_SMTP_PASSWORD=$$config__app_smtp_password
+      - _APP_USAGE_STATS=$$config__app_usage_stats
+      - _APP_INFLUXDB_HOST=$$config__app_influxdb_host
+      - _APP_INFLUXDB_PORT=$$config__app_influxdb_port
+      - _APP_STORAGE_LIMIT=$$config__app_storage_limit
+      - _APP_STORAGE_PREVIEW_LIMIT=$$config__app_storage_preview_limit
+      - _APP_STORAGE_ANTIVIRUS=$$config__app_storage_antivirus
+      - _APP_STORAGE_ANTIVIRUS_HOST=$$config__app_storage_antivirus_host
+      - _APP_STORAGE_ANTIVIRUS_PORT=$$config__app_storage_antivirus_port
+      - _APP_STORAGE_DEVICE=$$config__app_storage_device
+      - _APP_STORAGE_S3_ACCESS_KEY=$$config__app_storage_s3_access_key
+      - _APP_STORAGE_S3_SECRET=$$config__app_storage_s3_secret
+      - _APP_STORAGE_S3_REGION=$$config__app_storage_s3_region
+      - _APP_STORAGE_S3_BUCKET=$$config__app_storage_s3_bucket
+      - _APP_STORAGE_DO_SPACES_ACCESS_KEY=$$config__app_storage_do_spaces_access_key
+      - _APP_STORAGE_DO_SPACES_SECRET=$$config__app_storage_do_spaces_secret
+      - _APP_STORAGE_DO_SPACES_REGION=$$config__app_storage_do_spaces_region
+      - _APP_STORAGE_DO_SPACES_BUCKET=$$config__app_storage_do_spaces_bucket
+      - _APP_STORAGE_BACKBLAZE_ACCESS_KEY=$$config__app_storage_backblaze_access_key
+      - _APP_STORAGE_BACKBLAZE_SECRET=$$config__app_storage_backblaze_secret
+      - _APP_STORAGE_BACKBLAZE_REGION=$$config__app_storage_backblaze_region
+      - _APP_STORAGE_BACKBLAZE_BUCKET=$$config__app_storage_backblaze_bucket
+      - _APP_STORAGE_LINODE_ACCESS_KEY=$$config__app_storage_linode_access_key
+      - _APP_STORAGE_LINODE_SECRET=$$config__app_storage_linode_secret
+      - _APP_STORAGE_LINODE_REGION=$$config__app_storage_linode_region
+      - _APP_STORAGE_LINODE_BUCKET=$$config__app_storage_linode_bucket
+      - _APP_STORAGE_WASABI_ACCESS_KEY=$$config__app_storage_wasabi_access_key
+      - _APP_STORAGE_WASABI_SECRET=$$config__app_storage_wasabi_secret
+      - _APP_STORAGE_WASABI_REGION=$$config__app_storage_wasabi_region
+      - _APP_STORAGE_WASABI_BUCKET=$$config__app_storage_wasabi_bucket
+      - _APP_FUNCTIONS_SIZE_LIMIT=$$config__app_functions_size_limit
+      - _APP_FUNCTIONS_TIMEOUT=$$config__app_functions_timeout
+      - _APP_FUNCTIONS_BUILD_TIMEOUT=$$config__app_functions_build_timeout
+      - _APP_FUNCTIONS_CPUS=$$config__app_functions_cpus
+      - _APP_FUNCTIONS_MEMORY=$$config__app_functions_memory
+      - _APP_FUNCTIONS_RUNTIMES=$$config__app_functions_runtimes
+      - _APP_EXECUTOR_SECRET=$$config__app_executor_secret
+      - _APP_EXECUTOR_HOST=$$config__app_executor_host
+      - _APP_LOGGING_PROVIDER=$$config__app_logging_provider
+      - _APP_LOGGING_CONFIG=$$config__app_logging_config
+      - _APP_STATSD_HOST=$$config__app_statsd_host
+      - _APP_STATSD_PORT=$$config__app_statsd_port
+      - _APP_MAINTENANCE_INTERVAL=$$config__app_maintenance_interval
+      - _APP_MAINTENANCE_RETENTION_EXECUTION=$$config__app_maintenance_retention_execution
+      - _APP_MAINTENANCE_RETENTION_CACHE=$$config__app_maintenance_retention_cache
+      - _APP_MAINTENANCE_RETENTION_ABUSE=$$config__app_maintenance_retention_abuse
+      - _APP_MAINTENANCE_RETENTION_AUDIT=$$config__app_maintenance_retention_audit
+      - _APP_MAINTENANCE_RETENTION_USAGE_HOURLY=$$config__app_maintenance_retention_usage_hourly
+      - _APP_MAINTENANCE_RETENTION_SCHEDULES=$$config__app_maintenance_retention_schedules
+      - _APP_SMS_PROVIDER=$$config__app_sms_provider
+      - _APP_SMS_FROM=$$config__app_sms_from
+      - _APP_GRAPHQL_MAX_BATCH_SIZE=$$config__app_graphql_max_batch_size
+      - _APP_GRAPHQL_MAX_COMPLEXITY=$$config__app_graphql_max_complexity
+      - _APP_GRAPHQL_MAX_DEPTH=$$config__app_graphql_max_depth
+      - _APP_VCS_GITHUB_APP_NAME=$$config__app_vcs_github_app_name
+      - _APP_VCS_GITHUB_PRIVATE_KEY=$$config__app_vcs_github_private_key
+      - _APP_VCS_GITHUB_APP_ID=$$config__app_vcs_github_app_id
+      - _APP_VCS_GITHUB_WEBHOOK_SECRET=$$config__app_vcs_github_webhook_secret
+      - _APP_VCS_GITHUB_CLIENT_SECRET=$$config__app_vcs_github_client_secret
+      - _APP_VCS_GITHUB_CLIENT_ID=$$config__app_vcs_github_client_id
+      - _APP_MIGRATIONS_FIREBASE_CLIENT_ID=$$config__app_migrations_firebase_client_id
+      - _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET=$$config__app_migrations_firebase_client_secret
+      - _APP_ASSISTANT_OPENAI_API_KEY=$$config__app_assistant_openai_api_key
+    ports:
+      - '80'
+    proxy:
+      - port: '80'
+
+  $$id-realtime:
+    image: appwrite/appwrite:$$core_version
+    entrypoint: realtime
+    <<: *x-logging
+    restart: unless-stopped
+    depends_on:
+      - $$id-mariadb
+      - $$id-redis
+    environment:
+      - _APP_ENV=$$config__app_env
+      - _APP_WORKER_PER_CORE=$$config__app_worker_per_core
+      - _APP_OPTIONS_ABUSE=$$config__app_options_abuse
+      - _APP_OPENSSL_KEY_V1=$$config__app_openssl_key_v1
+      - _APP_REDIS_HOST=$$config__app_redis_host
+      - _APP_REDIS_PORT=$$config__app_redis_port
+      - _APP_REDIS_USER=$$config__app_redis_user
+      - _APP_REDIS_PASS=$$config__app_redis_pass
+      - _APP_DB_HOST=$$config__app_db_host
+      - _APP_DB_PORT=$$config__app_db_port
+      - _APP_DB_SCHEMA=$$config__app_db_schema
+      - _APP_DB_USER=$$config__app_db_user
+      - _APP_DB_PASS=$$config__app_db_pass
+      - _APP_USAGE_STATS=$$config__app_usage_stats
+      - _APP_LOGGING_PROVIDER=$$config__app_logging_provider
+      - _APP_LOGGING_CONFIG=$$config__app_logging_config
+    proxy:
+      - port: '80'
+        pathPrefix: /v1/realtime
+
+  $$id-worker-audits:
+    image: appwrite/appwrite:$$core_version
+    entrypoint: worker-audits
+    <<: *x-logging
+    restart: unless-stopped
+    depends_on:
+      - $$id-redis
+      - $$id-mariadb
+    environment:
+      - _APP_ENV=$$config__app_env
+      - _APP_WORKER_PER_CORE=$$config__app_worker_per_core
+      - _APP_OPENSSL_KEY_V1=$$config__app_openssl_key_v1
+      - _APP_REDIS_HOST=$$config__app_redis_host
+      - _APP_REDIS_PORT=$$config__app_redis_port
+      - _APP_REDIS_USER=$$config__app_redis_user
+      - _APP_REDIS_PASS=$$config__app_redis_pass
+      - _APP_DB_HOST=$$config__app_db_host
+      - _APP_DB_PORT=$$config__app_db_port
+      - _APP_DB_SCHEMA=$$config__app_db_schema
+      - _APP_DB_USER=$$config__app_db_user
+      - _APP_DB_PASS=$$config__app_db_pass
+      - _APP_LOGGING_PROVIDER=$$config__app_logging_provider
+      - _APP_LOGGING_CONFIG=$$config__app_logging_config
+
+  $$id-worker-webhooks:
+    image: appwrite/appwrite:$$core_version
+    entrypoint: worker-webhooks
+    <<: *x-logging
+    restart: unless-stopped
+    depends_on:
+      - $$id-redis
+      - $$id-mariadb
+    environment:
+      - _APP_ENV=$$config__app_env
+      - _APP_WORKER_PER_CORE=$$config__app_worker_per_core
+      - _APP_OPENSSL_KEY_V1=$$config__app_openssl_key_v1
+      - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS=$$config__app_system_security_email_address
+      - _APP_REDIS_HOST=$$config__app_redis_host
+      - _APP_REDIS_PORT=$$config__app_redis_port
+      - _APP_REDIS_USER=$$config__app_redis_user
+      - _APP_REDIS_PASS=$$config__app_redis_pass
+      - _APP_LOGGING_PROVIDER=$$config__app_logging_provider
+      - _APP_LOGGING_CONFIG=$$config__app_logging_config
+
+  $$id-worker-deletes:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: worker-deletes
+    <<: *x-logging
+    container_name: appwrite-worker-deletes
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - redis
+      - mariadb
+    volumes: 
+      - appwrite-uploads:/storage/uploads:rw
+      - appwrite-cache:/storage/cache:rw
+      - appwrite-functions:/storage/functions:rw
+      - appwrite-builds:/storage/builds:rw
+      - appwrite-certificates:/storage/certificates:rw
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_STORAGE_DEVICE
+      - _APP_STORAGE_S3_ACCESS_KEY
+      - _APP_STORAGE_S3_SECRET
+      - _APP_STORAGE_S3_REGION
+      - _APP_STORAGE_S3_BUCKET
+      - _APP_STORAGE_DO_SPACES_ACCESS_KEY
+      - _APP_STORAGE_DO_SPACES_SECRET
+      - _APP_STORAGE_DO_SPACES_REGION
+      - _APP_STORAGE_DO_SPACES_BUCKET
+      - _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+      - _APP_STORAGE_BACKBLAZE_SECRET
+      - _APP_STORAGE_BACKBLAZE_REGION
+      - _APP_STORAGE_BACKBLAZE_BUCKET
+      - _APP_STORAGE_LINODE_ACCESS_KEY
+      - _APP_STORAGE_LINODE_SECRET
+      - _APP_STORAGE_LINODE_REGION
+      - _APP_STORAGE_LINODE_BUCKET
+      - _APP_STORAGE_WASABI_ACCESS_KEY
+      - _APP_STORAGE_WASABI_SECRET
+      - _APP_STORAGE_WASABI_REGION
+      - _APP_STORAGE_WASABI_BUCKET
+      - _APP_LOGGING_PROVIDER
+      - _APP_LOGGING_CONFIG
+      - _APP_EXECUTOR_SECRET
+      - _APP_EXECUTOR_HOST
+
+  appwrite-worker-databases:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: worker-databases
+    <<: *x-logging
+    container_name: appwrite-worker-databases
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - redis
+      - mariadb
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_LOGGING_PROVIDER
+      - _APP_LOGGING_CONFIG
+
+  appwrite-worker-builds:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: worker-builds
+    <<: *x-logging
+    container_name: appwrite-worker-builds
+    restart: unless-stopped
+    networks:
+      - appwrite
+    volumes:
+      - appwrite-functions:/storage/functions:rw
+      - appwrite-builds:/storage/builds:rw
+    depends_on:
+      - redis
+      - mariadb
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_EXECUTOR_SECRET
+      - _APP_EXECUTOR_HOST
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_LOGGING_PROVIDER
+      - _APP_LOGGING_CONFIG
+      - _APP_VCS_GITHUB_APP_NAME
+      - _APP_VCS_GITHUB_PRIVATE_KEY
+      - _APP_VCS_GITHUB_APP_ID
+      - _APP_FUNCTIONS_TIMEOUT
+      - _APP_FUNCTIONS_BUILD_TIMEOUT
+      - _APP_FUNCTIONS_CPUS
+      - _APP_FUNCTIONS_MEMORY
+      - _APP_OPTIONS_FORCE_HTTPS
+      - _APP_DOMAIN
+
+  appwrite-worker-certificates:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: worker-certificates
+    <<: *x-logging
+    container_name: appwrite-worker-certificates
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - redis
+      - mariadb
+    volumes: 
+      - appwrite-config:/storage/config:rw
+      - appwrite-certificates:/storage/certificates:rw
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_DOMAIN
+      - _APP_DOMAIN_TARGET
+      - _APP_DOMAIN_FUNCTIONS
+      - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_LOGGING_PROVIDER
+      - _APP_LOGGING_CONFIG
+
+  appwrite-worker-functions:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: worker-functions
+    <<: *x-logging
+    container_name: appwrite-worker-functions
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - redis
+      - mariadb
+      - openruntimes-executor
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_FUNCTIONS_TIMEOUT
+      - _APP_FUNCTIONS_BUILD_TIMEOUT
+      - _APP_FUNCTIONS_CPUS
+      - _APP_FUNCTIONS_MEMORY
+      - _APP_EXECUTOR_SECRET
+      - _APP_EXECUTOR_HOST
+      - _APP_USAGE_STATS
+      - _APP_DOCKER_HUB_USERNAME
+      - _APP_DOCKER_HUB_PASSWORD
+      - _APP_LOGGING_CONFIG
+      - _APP_LOGGING_PROVIDER
+
+  appwrite-worker-mails:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: worker-mails
+    <<: *x-logging
+    container_name: appwrite-worker-mails
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - redis
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_SYSTEM_EMAIL_NAME
+      - _APP_SYSTEM_EMAIL_ADDRESS
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_SMTP_HOST
+      - _APP_SMTP_PORT
+      - _APP_SMTP_SECURE
+      - _APP_SMTP_USERNAME
+      - _APP_SMTP_PASSWORD
+      - _APP_LOGGING_PROVIDER
+      - _APP_LOGGING_CONFIG
+
+  appwrite-worker-messaging:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: worker-messaging
+    <<: *x-logging
+    container_name: appwrite-worker-messaging
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - redis
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_SMS_PROVIDER
+      - _APP_SMS_FROM
+      - _APP_LOGGING_PROVIDER
+      - _APP_LOGGING_CONFIG
+
+  appwrite-worker-migrations:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: worker-migrations
+    <<: *x-logging
+    container_name: appwrite-worker-migrations
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - mariadb
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_DOMAIN
+      - _APP_DOMAIN_TARGET
+      - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_LOGGING_PROVIDER
+      - _APP_LOGGING_CONFIG
+      - _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+      - _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+
+  appwrite-maintenance:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: maintenance
+    <<: *x-logging
+    container_name: appwrite-maintenance
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - redis
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_DOMAIN
+      - _APP_DOMAIN_TARGET
+      - _APP_DOMAIN_FUNCTIONS
+      - _APP_OPENSSL_KEY_V1
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_MAINTENANCE_INTERVAL
+      - _APP_MAINTENANCE_RETENTION_EXECUTION
+      - _APP_MAINTENANCE_RETENTION_CACHE
+      - _APP_MAINTENANCE_RETENTION_ABUSE
+      - _APP_MAINTENANCE_RETENTION_AUDIT
+      - _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+      - _APP_MAINTENANCE_RETENTION_SCHEDULES
+
+  appwrite-usage:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: usage
+    container_name: appwrite-usage
+    <<: *x-logging
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - influxdb
+      - mariadb
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_OPENSSL_KEY_V1
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+      - _APP_INFLUXDB_HOST
+      - _APP_INFLUXDB_PORT
+      - _APP_USAGE_AGGREGATION_INTERVAL
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_USAGE_STATS
+      - _APP_LOGGING_PROVIDER
+      - _APP_LOGGING_CONFIG
+
+  appwrite-schedule:
+    image: appwrite/appwrite:1.4.2
+    entrypoint: schedule
+    container_name: appwrite-schedule
+    <<: *x-logging
+    restart: unless-stopped
+    networks:
+      - appwrite
+    depends_on:
+      - mariadb
+      - redis
+    environment:
+      - _APP_ENV
+      - _APP_WORKER_PER_CORE
+      - _APP_REDIS_HOST
+      - _APP_REDIS_PORT
+      - _APP_REDIS_USER
+      - _APP_REDIS_PASS
+      - _APP_DB_HOST
+      - _APP_DB_PORT
+      - _APP_DB_SCHEMA
+      - _APP_DB_USER
+      - _APP_DB_PASS
+
+  appwrite-assistant:
+    image: appwrite/assistant:0.2.0
+    container_name: appwrite-assistant
+    <<: *x-logging
+    restart: unless-stopped
+    networks:
+      - appwrite
+    environment:
+      - _APP_ASSISTANT_OPENAI_API_KEY
+
+  openruntimes-executor:
+    container_name: openruntimes-executor
+    hostname: appwrite-executor
+    <<: *x-logging
+    stop_signal: SIGINT
+    image: openruntimes/executor:0.4.0
+    networks:
+      - appwrite
+      - runtimes
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - appwrite-builds:/storage/builds:rw
+      - appwrite-functions:/storage/functions:rw
+      # Host mount nessessary to share files between executor and runtimes.
+      # It's not possible to share mount file between 2 containers without host mount (copying is too slow)
+      - /tmp:/tmp:rw
+    environment:
+      - OPR_EXECUTOR_INACTIVE_TRESHOLD=$_APP_FUNCTIONS_INACTIVE_THRESHOLD
+      - OPR_EXECUTOR_MAINTENANCE_INTERVAL=$_APP_FUNCTIONS_MAINTENANCE_INTERVAL
+      - OPR_EXECUTOR_NETWORK=$_APP_FUNCTIONS_RUNTIMES_NETWORK
+      - OPR_EXECUTOR_DOCKER_HUB_USERNAME=$_APP_DOCKER_HUB_USERNAME
+      - OPR_EXECUTOR_DOCKER_HUB_PASSWORD=$_APP_DOCKER_HUB_PASSWORD
+      - OPR_EXECUTOR_ENV=$_APP_ENV
+      - OPR_EXECUTOR_RUNTIMES=$_APP_FUNCTIONS_RUNTIMES
+      - OPR_EXECUTOR_SECRET=$_APP_EXECUTOR_SECRET
+      - OPR_EXECUTOR_LOGGING_PROVIDER=$_APP_LOGGING_PROVIDER
+      - OPR_EXECUTOR_LOGGING_CONFIG=$_APP_LOGGING_CONFIG
+      - OPR_EXECUTOR_STORAGE_DEVICE=$_APP_STORAGE_DEVICE
+      - OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY=$_APP_STORAGE_S3_ACCESS_KEY
+      - OPR_EXECUTOR_STORAGE_S3_SECRET=$_APP_STORAGE_S3_SECRET
+      - OPR_EXECUTOR_STORAGE_S3_REGION=$_APP_STORAGE_S3_REGION
+      - OPR_EXECUTOR_STORAGE_S3_BUCKET=$_APP_STORAGE_S3_BUCKET
+      - OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY=$_APP_STORAGE_DO_SPACES_ACCESS_KEY
+      - OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET=$_APP_STORAGE_DO_SPACES_SECRET
+      - OPR_EXECUTOR_STORAGE_DO_SPACES_REGION=$_APP_STORAGE_DO_SPACES_REGION
+      - OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET=$_APP_STORAGE_DO_SPACES_BUCKET
+      - OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY=$_APP_STORAGE_BACKBLAZE_ACCESS_KEY
+      - OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET=$_APP_STORAGE_BACKBLAZE_SECRET
+      - OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION=$_APP_STORAGE_BACKBLAZE_REGION
+      - OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET=$_APP_STORAGE_BACKBLAZE_BUCKET
+      - OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY=$_APP_STORAGE_LINODE_ACCESS_KEY
+      - OPR_EXECUTOR_STORAGE_LINODE_SECRET=$_APP_STORAGE_LINODE_SECRET
+      - OPR_EXECUTOR_STORAGE_LINODE_REGION=$_APP_STORAGE_LINODE_REGION
+      - OPR_EXECUTOR_STORAGE_LINODE_BUCKET=$_APP_STORAGE_LINODE_BUCKET
+      - OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY=$_APP_STORAGE_WASABI_ACCESS_KEY
+      - OPR_EXECUTOR_STORAGE_WASABI_SECRET=$_APP_STORAGE_WASABI_SECRET
+      - OPR_EXECUTOR_STORAGE_WASABI_REGION=$_APP_STORAGE_WASABI_REGION
+      - OPR_EXECUTOR_STORAGE_WASABI_BUCKET=$_APP_STORAGE_WASABI_BUCKET
+
+  mariadb:
+    image: mariadb:10.7 # fix issues when upgrading using: mysql_upgrade -u root -p
+    container_name: appwrite-mariadb
+    <<: *x-logging
+    restart: unless-stopped
+    networks:
+      - appwrite
+    volumes:
+      - appwrite-mariadb:/var/lib/mysql:rw
+    environment:
+      - MYSQL_ROOT_PASSWORD=${_APP_DB_ROOT_PASS}
+      - MYSQL_DATABASE=${_APP_DB_SCHEMA}
+      - MYSQL_USER=${_APP_DB_USER}
+      - MYSQL_PASSWORD=${_APP_DB_PASS}
+    command: 'mysqld --innodb-flush-method=fsync'
+
+  redis:
+    image: redis:7.0.4-alpine
+    container_name: appwrite-redis
+    <<: *x-logging
+    restart: unless-stopped
+    command: >
+      redis-server
+      --maxmemory            512mb
+      --maxmemory-policy     allkeys-lru
+      --maxmemory-samples    5
+    networks:
+      - appwrite
+    volumes:
+      - appwrite-redis:/data:rw
+
+  # clamav:
+  #   image: appwrite/clamav:1.2.0
+  #   container_name: appwrite-clamav
+  #   restart: unless-stopped
+  #   networks:
+  #     - appwrite
+  #   volumes:
+  #     - appwrite-uploads:/storage/uploads
+
+  influxdb:
+    image: appwrite/influxdb:1.5.0
+    container_name: appwrite-influxdb
+    <<: *x-logging
+    restart: unless-stopped
+    networks:
+      - appwrite
+    volumes:
+      - appwrite-influxdb:/var/lib/influxdb:rw
+
+  telegraf:
+    image: appwrite/telegraf:1.4.0
+    container_name: appwrite-telegraf
+    <<: *x-logging
+    restart: unless-stopped
+    networks:
+      - appwrite
+    environment:
+      - _APP_INFLUXDB_HOST
+      - _APP_INFLUXDB_PORT
+
+networks:
+  gateway:
+    name: gateway
+  appwrite:
+    name: appwrite
+  runtimes:
+    name: runtimes
+
+volumes:
+  appwrite-mariadb:
+  appwrite-redis:
+  appwrite-cache:
+  appwrite-uploads:
+  appwrite-certificates:
+  appwrite-functions:
+  appwrite-builds:
+  appwrite-influxdb:
+  appwrite-config:
+
+variables:
+  - id: $$config__app_influxdb_host
+    name: _APP_INFLUXDB_HOST
+    label: InfluxDB | _APP_INFLUXDB_HOST
+    defaultValue: $$id-influxdb
+    description: ''
+  - id: $$config__app_influxdb_port
+    name: _APP_INFLUXDB_PORT
+    label: InfluxDB | _APP_INFLUXDB_PORT
+    defaultValue: 8086
+    description: >-
+      'InfluxDB server TCP port.''
+  - id: $$config__app_env
+    name: _APP_ENV
+    label: General | _APP_ENV
+    defaultValue: production
+    description: >-
+      'Set your server running environment.''
+  - id: $$config__app_worker_per_core
+    name: _APP_WORKER_PER_CORE
+    label: General | _APP_WORKER_PER_CORE
+    defaultValue: 6
+    description: >-
+      'Internal Worker per core for the API, Realtime and Executor containers. Can be configured to optimize performance.''
+  - id: $$config__app_locale
+    name: _APP_LOCALE
+    label: General | _APP_LOCALE
+    defaultValue: en
+    description: >-
+      'Set your Appwrite's locale. By default, the locale is set to 'en'.''
+  - id: $$config__app_console_whitelist_root
+    name: _APP_CONSOLE_WHITELIST_ROOT
+    label: General | _APP_CONSOLE_WHITELIST_ROOT
+    defaultValue: enabled
+    description: >-
+      'This option allows you to disable the creation of new users on the Appwrite console. When enabled only 1 user will be able to use the registration form. New users can be added by inviting them to your project. By default this option is enabled.''
+  - id: $$config__app_console_whitelist_emails
+    name: _APP_CONSOLE_WHITELIST_EMAILS
+    label: General | _APP_CONSOLE_WHITELIST_EMAILS
+    defaultValue: ''
+    description: >-
+      'This option allows you to limit creation of new users on the Appwrite console. This option is very useful for small teams or sole developers. To enable it, pass a list of allowed email addresses separated by a comma.''
+  - id: $$config__app_console_whitelist_ips
+    name: _APP_CONSOLE_WHITELIST_IPS
+    label: General | _APP_CONSOLE_WHITELIST_IPS
+    defaultValue: ''
+    description: >-
+      'This last option allows you to limit creation of users in Appwrite console for users sharing the same set of IP addresses. This option is very useful for team working with a VPN service or a company IP.\n\nTo enable/activate this option, pass a list of allowed IP addresses separated by a comma.''
+  - id: $$config__app_system_email_name
+    name: _APP_SYSTEM_EMAIL_NAME
+    label: General | _APP_SYSTEM_EMAIL_NAME
+    defaultValue: Appwrite
+    description: >-
+      'This is the sender name value that will appear on email messages sent to developers from the Appwrite console. You can use url encoded strings for spaces and special chars.''
+  - id: $$config__app_system_email_address
+    name: _APP_SYSTEM_EMAIL_ADDRESS
+    label: General | _APP_SYSTEM_EMAIL_ADDRESS
+    defaultValue: team@appwrite.io
+    description: >-
+      'This is the sender email address that will appear on email messages sent to developers from the Appwrite console. You should choose an email address that is allowed to be used from your SMTP server to avoid the server email ending in the users' SPAM folders.''
+  - id: $$config__app_system_security_email_address
+    name: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+    label: General | _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+    defaultValue: certs@appwrite.io
+    description: >-
+      'This is the email address used to issue SSL certificates for custom domains or the user agent in your webhooks payload.''
+  - id: $$config__app_system_response_format
+    name: _APP_SYSTEM_RESPONSE_FORMAT
+    label: General | _APP_SYSTEM_RESPONSE_FORMAT
+    defaultValue: ''
+    description: >-
+      'Use this environment variable to set the default Appwrite HTTP response format to support an older version of Appwrite. This option is useful to overcome breaking changes between versions. You can also use the X-Appwrite-Response-Format HTTP request header to overwrite the response for a specific request. This variable accepts any valid Appwrite version. To use the current version format, leave the value of the variable empty.''
+  - id: $$config__app_options_abuse
+    name: _APP_OPTIONS_ABUSE
+    label: General | _APP_OPTIONS_ABUSE
+    defaultValue: enabled
+    description: >-
+      'Allows you to disable abuse checks and API rate limiting. By default, set to 'enabled'. To cancel the abuse checking, set to 'disabled'. It is not recommended to disable this check-in a production environment.''
+  - id: $$config__app_options_force_https
+    name: _APP_OPTIONS_FORCE_HTTPS
+    label: General | _APP_OPTIONS_FORCE_HTTPS
+    defaultValue: disabled
+    description: >-
+      'Allows you to force HTTPS connection to your API. This feature redirects any HTTP call to HTTPS and adds the 'Strict-Transport-Security' header to all HTTP responses.''
+  - id: $$secret__app_openssl_key_v1
+    name: _APP_OPENSSL_KEY_V1
+    label: General | _APP_OPENSSL_KEY_V1
+    defaultValue: $$generate_hex(256)
+    description: >-
+      'This is your server private secret key that is used to encrypt all sensitive data on your server. Appwrite server encrypts all secret data on your server like webhooks, HTTP passwords, user sessions, and storage files. Keep it a secret and have a backup for it.''
+  - id: $$config__app_domain
+    name: _APP_DOMAIN
+    label: General | _APP_DOMAIN
+    defaultValue: $$generate_domain
+    description: >-
+      'Your Appwrite domain address. When setting a public suffix domain, Appwrite will attempt to issue a valid SSL certificate automatically. When used with a dev domain, Appwrite will assign a self-signed SSL certificate. The default value is 'localhost'.''
+  - id: $$config__app_domain_target
+    name: _APP_DOMAIN_TARGET
+    label: General | _APP_DOMAIN_TARGET
+    defaultValue: $$generate_fqdn
+    description: >-
+      'A DNS A record hostname to serve as a CNAME target for your Appwrite custom domains. You can use the same value as used for the Appwrite '_APP_DOMAIN' variable. The default value is 'localhost'.''
+  - id: $$config__app_redis_host
+    name: _APP_REDIS_HOST
+    label: Redis | _APP_REDIS_HOST
+    defaultValue: $$id-redis
+    description:>-
+      ' ''
+  - id: $$config__app_redis_port
+    name: _APP_REDIS_PORT
+    label: Redis | _APP_REDIS_PORT
+    defaultValue: 6379
+    description: >-
+      'Redis server TCP port.''
+  - id: $$config__app_redis_user
+    name: _APP_REDIS_USER
+    label: Redis | _APP_REDIS_USER
+    defaultValue: ''
+    description: >-
+      'Redis server user. This is an optional variable. Default value is an empty string.''
+  - id: $$secret__app_redis_pass
+    name: _APP_REDIS_PASS
+    label: Redis | _APP_REDIS_PASS
+    defaultValue: ''
+    description: >-
+      'Redis server password. This is an optional variable. Default value is an empty string.''
+  - id: $$config__app_db_host
+    name: _APP_DB_HOST
+    label: MariaDB | _APP_DB_HOST
+    defaultValue: $$id-mariadb
+    description:>-
+      ' ''
+  - id: $$config__app_db_port
+    name: _APP_DB_PORT
+    label: MariaDB | _APP_DB_PORT
+    defaultValue: 3306
+    description: >-
+      'MariaDB server TCP port.''
+  - id: $$config__app_db_schema
+    name: _APP_DB_SCHEMA
+    label: MariaDB | _APP_DB_SCHEMA
+    defaultValue: appwrite
+    description: >-
+      'MariaDB server database schema.''
+  - id: $$config__app_db_user
+    name: _APP_DB_USER
+    label: MariaDB | _APP_DB_USER
+    defaultValue: user
+    description: >-
+      'MariaDB server user name.''
+  - id: $$secret__app_db_pass
+    name: _APP_DB_PASS
+    label: MariaDB | _APP_DB_PASS
+    defaultValue: $$generate_hex(16)
+    description: >-
+      'MariaDB server user password.''
+  - id: $$config__app_smtp_host
+    name: _APP_SMTP_HOST
+    label: SMTP | _APP_SMTP_HOST
+    defaultValue: ''
+    description: >-
+      'SMTP server host name address. Use an empty string to disable all mail sending from the server. The default value for this variable is an empty string.''
+  - id: $$config__app_smtp_port
+    name: _APP_SMTP_PORT
+    label: SMTP | _APP_SMTP_PORT
+    defaultValue: ''
+    description: >-
+      'SMTP server TCP port. Empty by default.''
+  - id: $$config__app_smtp_secure
+    name: _APP_SMTP_SECURE
+    label: SMTP | _APP_SMTP_SECURE
+    defaultValue: ''
+    description: >-
+      'SMTP secure connection protocol. Empty by default, change to 'tls' if running on a secure connection.''
+  - id: $$config__app_smtp_username
+    name: _APP_SMTP_USERNAME
+    label: SMTP | _APP_SMTP_USERNAME
+    defaultValue: ''
+    description: >-
+      'SMTP server user name. Empty by default.''
+  - id: $$secret__app_smtp_password
+    name: _APP_SMTP_PASSWORD
+    label: SMTP | _APP_SMTP_PASSWORD
+    defaultValue: ''
+    description: >-
+      'SMTP server user password. Empty by default.''
+  - id: $$config__app_usage_stats
+    name: _APP_USAGE_STATS
+    label: General | _APP_USAGE_STATS
+    defaultValue: enabled
+    description: >-
+      'This variable allows you to disable the collection and displaying of usage stats. This value is set to 'enabled' by default, to disable the usage stats set the value to 'disabled'. When disabled, it's recommended to turn off the Worker Usage, Influxdb and Telegraf containers for better resource usage.''
+  - id: $$config__app_storage_limit
+    name: _APP_STORAGE_LIMIT
+    label: Storage | _APP_STORAGE_LIMIT
+    defaultValue: 30000000
+    description: >-
+      'Maximum file size allowed for file upload. The default value is 30MB. You should pass your size limit value in bytes.''
+  - id: $$config__app_storage_preview_limit
+    name: _APP_STORAGE_PREVIEW_LIMIT
+    label: Storage | _APP_STORAGE_PREVIEW_LIMIT
+    defaultValue: 20000000
+    description: >-
+      'Maximum file size allowed for file image preview. The default value is 20MB. You should pass your size limit value in bytes.''
+  - id: $$config__app_storage_antivirus_enabled
+    name: _APP_STORAGE_ANTIVIRUS
+    label: Storage | _APP_STORAGE_ANTIVIRUS
+    defaultValue: disabled
+    description: >-
+      'This variable allows you to disable the internal anti-virus scans. This value is set to 'disabled' by default, to enable the scans set the value to 'enabled'. Before enabling, you must add the ClamAV service and depend on it on main Appwrite service.''
+  - id: $$config__app_storage_antivirus_host
+    name: _APP_STORAGE_ANTIVIRUS_HOST
+    label: Storage | _APP_STORAGE_ANTIVIRUS_HOST
+    defaultValue: clamav
+    description: >-
+      'ClamAV server host name address.''
+  - id: $$config__app_storage_antivirus_port
+    name: _APP_STORAGE_ANTIVIRUS_PORT
+    label: Storage | _APP_STORAGE_ANTIVIRUS_PORT
+    defaultValue: 3310
+    description: >-
+      'ClamAV server TCP port.''
+  - id: $$config__app_storage_device
+    name: _APP_STORAGE_DEVICE
+    label: Storage | _APP_STORAGE_DEVICE
+    defaultValue: Local
+    description: >-
+      'Select default storage device. The default value is 'Local'. List of supported adapters are 'Local', 'S3', 'DOSpaces', 'Backblaze', 'Linode' and 'Wasabi'.''
+  - id: $$secret__app_storage_s3_access_key
+    name: _APP_STORAGE_S3_ACCESS_KEY
+    label: Storage | _APP_STORAGE_S3_ACCESS_KEY
+    defaultValue: ''
+    description: >-
+      'AWS S3 storage access key. Required when the storage adapter is set to S3. You can get your access key from your AWS console.''
+  - id: $$secret__app_storage_s3_secret
+    name: _APP_STORAGE_S3_SECRET
+    label: Storage | _APP_STORAGE_S3_SECRET
+    defaultValue: ''
+    description: >-
+      'AWS S3 storage secret key. Required when the storage adapter is set to S3. You can get your secret key from your AWS console.''
+  - id: $$config__app_storage_s3_region
+    name: _APP_STORAGE_S3_REGION
+    label: Storage | _APP_STORAGE_S3_REGION
+    defaultValue: us-east-1
+    description: >-
+      'AWS S3 storage region. Required when storage adapter is set to S3. You can find your region info for your bucket from AWS console.''
+  - id: $$config__app_storage_s3_bucket
+    name: _APP_STORAGE_S3_BUCKET
+    label: Storage | _APP_STORAGE_S3_BUCKET
+    defaultValue: ''
+    description: >-
+      'AWS S3 storage bucket. Required when storage adapter is set to S3. You can create buckets in your AWS console.''
+  - id: $$secret__app_storage_do_spaces_access_key
+    name: _APP_STORAGE_DO_SPACES_ACCESS_KEY
+    label: Storage | _APP_STORAGE_DO_SPACES_ACCESS_KEY
+    defaultValue: ''
+    description: >-
+      'DigitalOcean spaces access key. Required when the storage adapter is set to DOSpaces. You can get your access key from your DigitalOcean console.''
+  - id: $$secret__app_storage_do_spaces_secret
+    name: _APP_STORAGE_DO_SPACES_SECRET
+    label: Storage | _APP_STORAGE_DO_SPACES_SECRET
+    defaultValue: ''
+    description: >-
+      'DigitalOcean spaces secret key. Required when the storage adapter is set to DOSpaces. You can get your secret key from your DigitalOcean console.''
+  - id: $$config__app_storage_do_spaces_region
+    name: _APP_STORAGE_DO_SPACES_REGION
+    label: Storage | _APP_STORAGE_DO_SPACES_REGION
+    defaultValue: us-east-1
+    description: >-
+      'DigitalOcean spaces region. Required when storage adapter is set to DOSpaces. You can find your region info for your space from DigitalOcean console.''
+  - id: $$config__app_storage_do_spaces_bucket
+    name: _APP_STORAGE_DO_SPACES_BUCKET
+    label: Storage | _APP_STORAGE_DO_SPACES_BUCKET
+    defaultValue: ''
+    description: >-
+      'DigitalOcean spaces bucket. Required when storage adapter is set to DOSpaces. You can create spaces in your DigitalOcean console.''
+  - id: $$secret__app_storage_backblaze_access_key
+    name: _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+    label: Storage | _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+    defaultValue: ''
+    description: >-
+      'Backblaze access key. Required when the storage adapter is set to Backblaze. Your Backblaze keyID will be your access key. You can get your keyID from your Backblaze console.''
+  - id: $$secret__app_storage_backblaze_secret
+    name: _APP_STORAGE_BACKBLAZE_SECRET
+    label: Storage | _APP_STORAGE_BACKBLAZE_SECRET
+    defaultValue: ''
+    description: >-
+      'Backblaze secret key. Required when the storage adapter is set to Backblaze. Your Backblaze applicationKey will be your secret key. You can get your applicationKey from your Backblaze console.''
+  - id: $$config__app_storage_backblaze_region
+    name: _APP_STORAGE_BACKBLAZE_REGION
+    label: Storage | _APP_STORAGE_BACKBLAZE_REGION
+    defaultValue: us-west-004
+    description: >-
+      'Backblaze region. Required when storage adapter is set to Backblaze. You can find your region info from your Backblaze console.''
+  - id: $$config__app_storage_backblaze_bucket
+    name: _APP_STORAGE_BACKBLAZE_BUCKET
+    label: Storage | _APP_STORAGE_BACKBLAZE_BUCKET
+    defaultValue: ''
+    description: >-
+      'Backblaze bucket. Required when storage adapter is set to Backblaze. You can create your bucket from your Backblaze console.''
+  - id: $$secret__app_storage_linode_access_key
+    name: _APP_STORAGE_LINODE_ACCESS_KEY
+    label: Storage | _APP_STORAGE_LINODE_ACCESS_KEY
+    defaultValue: ''
+    description: >-
+      'Linode object storage access key. Required when the storage adapter is set to Linode. You can get your access key from your Linode console.''
+  - id: $$secret__app_storage_linode_secret
+    name: _APP_STORAGE_LINODE_SECRET
+    label: Storage | _APP_STORAGE_LINODE_SECRET
+    defaultValue: ''
+    description: >-
+      'Linode object storage secret key. Required when the storage adapter is set to Linode. You can get your secret key from your Linode console.''
+  - id: $$config__app_storage_linode_region
+    name: _APP_STORAGE_LINODE_REGION
+    label: Storage | _APP_STORAGE_LINODE_REGION
+    defaultValue: eu-central-1
+    description: >-
+      'Linode object storage region. Required when storage adapter is set to Linode. You can find your region info from your Linode console.''
+  - id: $$config__app_storage_linode_bucket
+    name: _APP_STORAGE_LINODE_BUCKET
+    label: Storage | _APP_STORAGE_LINODE_BUCKET
+    defaultValue: ''
+    description: >-
+      'Linode object storage bucket. Required when storage adapter is set to Linode. You can create buckets in your Linode console.''
+  - id: $$secret__app_storage_wasabi_access_key
+    name: _APP_STORAGE_WASABI_ACCESS_KEY
+    label: Storage | _APP_STORAGE_WASABI_ACCESS_KEY
+    defaultValue: ''
+    description: >-
+      'Wasabi access key. Required when the storage adapter is set to Wasabi. You can get your access key from your Wasabi console.''
+  - id: $$secret__app_storage_wasabi_secret
+    name: _APP_STORAGE_WASABI_SECRET
+    label: Storage | _APP_STORAGE_WASABI_SECRET
+    defaultValue: ''
+    description: >-
+      'Wasabi secret key. Required when the storage adapter is set to Wasabi. You can get your secret key from your Wasabi console.''
+  - id: $$config__app_storage_wasabi_region
+    name: _APP_STORAGE_WASABI_REGION
+    label: Storage | _APP_STORAGE_WASABI_REGION
+    defaultValue: eu-central-1
+    description: >-
+      'Wasabi region. Required when storage adapter is set to Wasabi. You can find your region info from your Wasabi console.''
+  - id: $$config__app_storage_wasabi_bucket
+    name: _APP_STORAGE_WASABI_BUCKET
+    label: Storage | _APP_STORAGE_WASABI_BUCKET
+    defaultValue: ''
+    description: >-
+      'Wasabi bucket. Required when storage adapter is set to Wasabi. You can create buckets in your Wasabi console.''
+  - id: $$config__app_functions_size_limit
+    name: _APP_FUNCTIONS_SIZE_LIMIT
+    label: Functions | _APP_FUNCTIONS_SIZE_LIMIT
+    defaultValue: 30000000
+    description: >-
+      'The maximum size deployment in bytes. The default value is 30MB.''
+  - id: $$config__app_functions_timeout
+    name: _APP_FUNCTIONS_TIMEOUT
+    label: Functions | _APP_FUNCTIONS_TIMEOUT
+    defaultValue: 900
+    description: >-
+      'The maximum number of seconds allowed as a timeout value when creating a new function. The default value is 900 seconds.''
+  - id: $$config__app_functions_build_timeout
+    name: _APP_FUNCTIONS_BUILD_TIMEOUT
+    label: Functions | _APP_FUNCTIONS_BUILD_TIMEOUT
+    defaultValue: 900
+    description: >-
+      'The maximum number of seconds allowed as a timeout value when building a new function. The default value is 900 seconds.''
+  - id: $$config__app_functions_cpus
+    name: _APP_FUNCTIONS_CPUS
+    label: Functions | _APP_FUNCTIONS_CPUS
+    defaultValue: ''
+    description: >-
+      'The maximum number of CPU core a single cloud function is allowed to use. Please note that setting a value higher than available cores will result in a function error, which might result in an error. The default value is empty. When it's empty, CPU limit will be disabled.''
+  - id: $$config__app_functions_memory_allocated
+    name: _APP_FUNCTIONS_MEMORY
+    label: Functions | _APP_FUNCTIONS_MEMORY
+    defaultValue: ''
+    description: >-
+      'The maximum amount of memory a single cloud function is allowed to use in megabytes. The default value is empty. When it's empty, memory limit will be disabled.''
+  - id: $$config__app_functions_runtimes
+    name: _APP_FUNCTIONS_RUNTIMES
+    label: Functions | _APP_FUNCTIONS_RUNTIMES
+    defaultValue: node-18.0
+    description: >-
+      'This option allows you to limit the available environments for cloud functions. This option is very useful for low-cost servers to safe disk space.''
+To enable/activate this option, pass a list of allowed environments separated by a comma.
+Currently, supported environments are: node-14.5, node-16.0, node-18.0, php-8.0, php-8.1, ruby-3.0, ruby-3.1, python-3.8, python-3.9, python-3.10, deno-1.21, deno-1.24, dart-2.15, dart-2.16, dart-2.17, dotnet-3.1, dotnet-6.0, java-8.0, java-11.0, java-17.0, java-18.0, swift-5.5, kotlin-1.6, cpp-17.0
+  - id: $$secret__app_executor_secret
+    name: _APP_EXECUTOR_SECRET
+    label: Functions | _APP_EXECUTOR_SECRET
+    defaultValue: $$generate_hex(16)
+    description: >-
+      'The secret key used by Appwrite to communicate with the function executor.''
+  - id: $$config__app_executor_host
+    name: _APP_EXECUTOR_HOST
+    label: 
+    defaultValue: http://$$id-executor/v1
+    description: 
+  - id: $$config__app_logging_provider
+    name: _APP_LOGGING_PROVIDER
+    label: General | _APP_LOGGING_PROVIDER
+    defaultValue: ''
+    description: This variable allows you to enable logging errors to 3rd party providers. This value is empty by default, to enable the logger set the value to one of 'sentry', 'raygun', 'appsignal', 'logowl'
+  - id: $$config__app_logging_config
+    name: _APP_LOGGING_CONFIG
+    label: General | _APP_LOGGING_CONFIG
+    defaultValue: ''
+    description: This variable configures authentication to 3rd party error logging providers. If using Sentry, this should be 'SENTRY_API_KEY;SENTRY_APP_ID'. If using Raygun, this should be Raygun API key. If using AppSignal, this should be AppSignal API key. If using LogOwl, this should be LogOwl Service Ticket.
+  - id: $$config__app_statsd_host
+    name: _APP_STATSD_HOST
+    label: 
+    defaultValue: $$id-telegraf
+    description: 
+  - id: $$config__app_statsd_port
+    name: _APP_STATSD_PORT
+    label: StatsD | _APP_STATSD_PORT
+    defaultValue: 8125
+    description: StatsD server TCP port.
+  - id: $$config__app_maintenance_interval
+    name: _APP_MAINTENANCE_INTERVAL
+    label: Functions | _APP_MAINTENANCE_INTERVAL
+    defaultValue: 86400
+    description: Interval value containing the number of seconds that the Appwrite maintenance process should wait before executing system cleanups and optimizations. The default value is 86400 seconds (1 day).
+  - id: $$config__app_maintenance_retention_execution
+    name: _APP_MAINTENANCE_RETENTION_EXECUTION
+    label: Functions | _APP_MAINTENANCE_RETENTION_EXECUTION
+    defaultValue: 1209600
+    description: The maximum duration (in seconds) upto which to retain execution logs. The default value is 1209600 seconds (14 days).
+  - id: $$config__app_maintenance_retention_cache
+    name: _APP_MAINTENANCE_RETENTION_CACHE
+    label: Functions | _APP_MAINTENANCE_RETENTION_CACHE
+    defaultValue: 2592000
+    description: The maximum duration (in seconds) upto which to retain cached files. The default value is 2592000 seconds (30 days).
+  - id: $$config__app_maintenance_retention_abuse
+    name: _APP_MAINTENANCE_RETENTION_ABUSE
+    label: Functions | _APP_MAINTENANCE_RETENTION_ABUSE
+    defaultValue: 86400
+    description: The maximum duration (in seconds) upto which to retain abuse logs. The default value is 86400 seconds (1 day).
+  - id: $$config__app_maintenance_retention_audit
+    name: _APP_MAINTENANCE_RETENTION_AUDIT
+    label: Functions | _APP_MAINTENANCE_RETENTION_AUDIT
+    defaultValue: 1209600
+    description: The maximum duration (in seconds) upto which to retain audit logs. The default value is 1209600 seconds (14 days).
+  - id: $$config__app_sms_provider
+    name: _APP_SMS_PROVIDER
+    label: Phone | _APP_SMS_PROVIDER
+    defaultValue: ''
+    description: Provider used for delivering SMS for Phone authentication. Use the following format: 'sms://[USER]:[SECRET]@[PROVIDER]'. Available providers are twilio, text-magic, telesign, msg91, and vonage.
+  - id: $$config__app_sms_from
+    name: _APP_SMS_FROM
+    label: Phone | _APP_SMS_FROM
+    defaultValue: ''
+    description: Phone number used for sending out messages. Must start with a leading '+' and maximum of 15 digits without spaces (+123456789).
+  - id: $$config_opr_executor_storage_backblaze_bucket
+    name: OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET
+    label: OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_migrations_firebase_client_secret
+    name: _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+    label: _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_do_spaces_bucket
+    name: OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET
+    label: OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_logging_provider
+    name: OPR_EXECUTOR_LOGGING_PROVIDER
+    label: OPR_EXECUTOR_LOGGING_PROVIDER
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_env
+    name: OPR_EXECUTOR_ENV
+    label: OPR_EXECUTOR_ENV
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_docker_hub_password
+    name: OPR_EXECUTOR_DOCKER_HUB_PASSWORD
+    label: OPR_EXECUTOR_DOCKER_HUB_PASSWORD
+    defaultValue: ''
+    description: ''
+  - id: $$config_mysql_database
+    name: MYSQL_DATABASE
+    label: MYSQL_DATABASE
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_s3_secret
+    name: OPR_EXECUTOR_STORAGE_S3_SECRET
+    label: OPR_EXECUTOR_STORAGE_S3_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_docker_hub_username
+    name: OPR_EXECUTOR_DOCKER_HUB_USERNAME
+    label: OPR_EXECUTOR_DOCKER_HUB_USERNAME
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_graphql_max_depth
+    name: _APP_GRAPHQL_MAX_DEPTH
+    label: _APP_GRAPHQL_MAX_DEPTH
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_docker_hub_username
+    name: _APP_DOCKER_HUB_USERNAME
+    label: _APP_DOCKER_HUB_USERNAME
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_usage_aggregation_interval
+    name: _APP_USAGE_AGGREGATION_INTERVAL
+    label: _APP_USAGE_AGGREGATION_INTERVAL
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_docker_hub_password
+    name: _APP_DOCKER_HUB_PASSWORD
+    label: _APP_DOCKER_HUB_PASSWORD
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_network
+    name: OPR_EXECUTOR_NETWORK
+    label: OPR_EXECUTOR_NETWORK
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_backblaze_access_key
+    name: OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY
+    label: OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_wasabi_bucket
+    name: OPR_EXECUTOR_STORAGE_WASABI_BUCKET
+    label: OPR_EXECUTOR_STORAGE_WASABI_BUCKET
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_vcs_github_app_name
+    name: _APP_VCS_GITHUB_APP_NAME
+    label: _APP_VCS_GITHUB_APP_NAME
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_migrations_firebase_client_id
+    name: _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+    label: _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_wasabi_region
+    name: OPR_EXECUTOR_STORAGE_WASABI_REGION
+    label: OPR_EXECUTOR_STORAGE_WASABI_REGION
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_maintenance_retention_usage_hourly
+    name: _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+    label: _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_s3_access_key
+    name: OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY
+    label: OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY
+    defaultValue: ''
+    description: ''
+  - id: $$config_mysql_root_password
+    name: MYSQL_ROOT_PASSWORD
+    label: MYSQL_ROOT_PASSWORD
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_backblaze_region
+    name: OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION
+    label: OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_inactive_treshold
+    name: OPR_EXECUTOR_INACTIVE_TRESHOLD
+    label: OPR_EXECUTOR_INACTIVE_TRESHOLD
+    defaultValue: ''
+    description: ''
+  - id: $$config_mysql_password
+    name: MYSQL_PASSWORD
+    label: MYSQL_PASSWORD
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_do_spaces_region
+    name: OPR_EXECUTOR_STORAGE_DO_SPACES_REGION
+    label: OPR_EXECUTOR_STORAGE_DO_SPACES_REGION
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_linode_access_key
+    name: OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY
+    label: OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_linode_secret
+    name: OPR_EXECUTOR_STORAGE_LINODE_SECRET
+    label: OPR_EXECUTOR_STORAGE_LINODE_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_domain_functions
+    name: _APP_DOMAIN_FUNCTIONS
+    label: _APP_DOMAIN_FUNCTIONS
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_linode_region
+    name: OPR_EXECUTOR_STORAGE_LINODE_REGION
+    label: OPR_EXECUTOR_STORAGE_LINODE_REGION
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_secret
+    name: OPR_EXECUTOR_SECRET
+    label: OPR_EXECUTOR_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_wasabi_access_key
+    name: OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY
+    label: OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_device
+    name: OPR_EXECUTOR_STORAGE_DEVICE
+    label: OPR_EXECUTOR_STORAGE_DEVICE
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_runtimes
+    name: OPR_EXECUTOR_RUNTIMES
+    label: OPR_EXECUTOR_RUNTIMES
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_vcs_github_private_key
+    name: _APP_VCS_GITHUB_PRIVATE_KEY
+    label: _APP_VCS_GITHUB_PRIVATE_KEY
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_graphql_max_batch_size
+    name: _APP_GRAPHQL_MAX_BATCH_SIZE
+    label: _APP_GRAPHQL_MAX_BATCH_SIZE
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_s3_bucket
+    name: OPR_EXECUTOR_STORAGE_S3_BUCKET
+    label: OPR_EXECUTOR_STORAGE_S3_BUCKET
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_vcs_github_app_id
+    name: _APP_VCS_GITHUB_APP_ID
+    label: _APP_VCS_GITHUB_APP_ID
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_wasabi_secret
+    name: OPR_EXECUTOR_STORAGE_WASABI_SECRET
+    label: OPR_EXECUTOR_STORAGE_WASABI_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_graphql_max_complexity
+    name: _APP_GRAPHQL_MAX_COMPLEXITY
+    label: _APP_GRAPHQL_MAX_COMPLEXITY
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_s3_region
+    name: OPR_EXECUTOR_STORAGE_S3_REGION
+    label: OPR_EXECUTOR_STORAGE_S3_REGION
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_linode_bucket
+    name: OPR_EXECUTOR_STORAGE_LINODE_BUCKET
+    label: OPR_EXECUTOR_STORAGE_LINODE_BUCKET
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_do_spaces_access_key
+    name: OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY
+    label: OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_vcs_github_webhook_secret
+    name: _APP_VCS_GITHUB_WEBHOOK_SECRET
+    label: _APP_VCS_GITHUB_WEBHOOK_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_maintenance_retention_schedules
+    name: _APP_MAINTENANCE_RETENTION_SCHEDULES
+    label: _APP_MAINTENANCE_RETENTION_SCHEDULES
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_backblaze_secret
+    name: OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET
+    label: OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_maintenance_interval
+    name: OPR_EXECUTOR_MAINTENANCE_INTERVAL
+    label: OPR_EXECUTOR_MAINTENANCE_INTERVAL
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_logging_config
+    name: OPR_EXECUTOR_LOGGING_CONFIG
+    label: OPR_EXECUTOR_LOGGING_CONFIG
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_vcs_github_client_secret
+    name: _APP_VCS_GITHUB_CLIENT_SECRET
+    label: _APP_VCS_GITHUB_CLIENT_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_assistant_openai_api_key
+    name: _APP_ASSISTANT_OPENAI_API_KEY
+    label: _APP_ASSISTANT_OPENAI_API_KEY
+    defaultValue: ''
+    description: ''
+  - id: $$config_opr_executor_storage_do_spaces_secret
+    name: OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET
+    label: OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET
+    defaultValue: ''
+    description: ''
+  - id: $$config__app_vcs_github_client_id
+    name: _APP_VCS_GITHUB_CLIENT_ID
+    label: _APP_VCS_GITHUB_CLIENT_ID
+    defaultValue: ''
+    description: ''
+  - id: $$config_mysql_user
+    name: MYSQL_USER
+    label: MYSQL_USER
+    defaultValue: ''
+    description: ''

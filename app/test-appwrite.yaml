@@ -1,0 +1,3078 @@
+defaultVersion: 1.4.2
+description: Your Backend for Frontend
+labels:
+- backend
+- database
+- storage
+name: Appwrite
+services:
+  $$id:
+    container_name: appwrite
+    depends_on:
+    - mariadb
+    - redis
+    - influxdb
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_LOCALE=$${config}__APP_LOCALE
+    - _APP_CONSOLE_WHITELIST_ROOT=$${config}__APP_CONSOLE_WHITELIST_ROOT
+    - _APP_CONSOLE_WHITELIST_EMAILS=$${config}__APP_CONSOLE_WHITELIST_EMAILS
+    - _APP_CONSOLE_WHITELIST_IPS=$${config}__APP_CONSOLE_WHITELIST_IPS
+    - _APP_SYSTEM_EMAIL_NAME=$${config}__APP_SYSTEM_EMAIL_NAME
+    - _APP_SYSTEM_EMAIL_ADDRESS=$${config}__APP_SYSTEM_EMAIL_ADDRESS
+    - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS=$${config}__APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+    - _APP_SYSTEM_RESPONSE_FORMAT=$${config}__APP_SYSTEM_RESPONSE_FORMAT
+    - _APP_OPTIONS_ABUSE=$${config}__APP_OPTIONS_ABUSE
+    - _APP_OPTIONS_FORCE_HTTPS=$${config}__APP_OPTIONS_FORCE_HTTPS
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_DOMAIN=$${config}__APP_DOMAIN
+    - _APP_DOMAIN_TARGET=$${config}__APP_DOMAIN_TARGET
+    - _APP_DOMAIN_FUNCTIONS=$${config}__APP_DOMAIN_FUNCTIONS
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_SMTP_HOST=$${config}__APP_SMTP_HOST
+    - _APP_SMTP_PORT=$${config}__APP_SMTP_PORT
+    - _APP_SMTP_SECURE=$${config}__APP_SMTP_SECURE
+    - _APP_SMTP_USERNAME=$${config}__APP_SMTP_USERNAME
+    - _APP_SMTP_PASSWORD=$${secret}__APP_SMTP_PASSWORD
+    - _APP_USAGE_STATS=$${config}__APP_USAGE_STATS
+    - _APP_INFLUXDB_HOST=$${config}__APP_INFLUXDB_HOST
+    - _APP_INFLUXDB_PORT=$${config}__APP_INFLUXDB_PORT
+    - _APP_STORAGE_LIMIT=$${config}__APP_STORAGE_LIMIT
+    - _APP_STORAGE_PREVIEW_LIMIT=$${config}__APP_STORAGE_PREVIEW_LIMIT
+    - _APP_STORAGE_ANTIVIRUS=$${config}__APP_STORAGE_ANTIVIRUS
+    - _APP_STORAGE_ANTIVIRUS_HOST=$${config}__APP_STORAGE_ANTIVIRUS_HOST
+    - _APP_STORAGE_ANTIVIRUS_PORT=$${config}__APP_STORAGE_ANTIVIRUS_PORT
+    - _APP_STORAGE_DEVICE=$${config}__APP_STORAGE_DEVICE
+    - _APP_STORAGE_S3_ACCESS_KEY=$${config}__APP_STORAGE_S3_ACCESS_KEY
+    - _APP_STORAGE_S3_SECRET=$${secret}__APP_STORAGE_S3_SECRET
+    - _APP_STORAGE_S3_REGION=$${config}__APP_STORAGE_S3_REGION
+    - _APP_STORAGE_S3_BUCKET=$${config}__APP_STORAGE_S3_BUCKET
+    - _APP_STORAGE_DO_SPACES_ACCESS_KEY=$${config}__APP_STORAGE_DO_SPACES_ACCESS_KEY
+    - _APP_STORAGE_DO_SPACES_SECRET=$${secret}__APP_STORAGE_DO_SPACES_SECRET
+    - _APP_STORAGE_DO_SPACES_REGION=$${config}__APP_STORAGE_DO_SPACES_REGION
+    - _APP_STORAGE_DO_SPACES_BUCKET=$${config}__APP_STORAGE_DO_SPACES_BUCKET
+    - _APP_STORAGE_BACKBLAZE_ACCESS_KEY=$${config}__APP_STORAGE_BACKBLAZE_ACCESS_KEY
+    - _APP_STORAGE_BACKBLAZE_SECRET=$${secret}__APP_STORAGE_BACKBLAZE_SECRET
+    - _APP_STORAGE_BACKBLAZE_REGION=$${config}__APP_STORAGE_BACKBLAZE_REGION
+    - _APP_STORAGE_BACKBLAZE_BUCKET=$${config}__APP_STORAGE_BACKBLAZE_BUCKET
+    - _APP_STORAGE_LINODE_ACCESS_KEY=$${config}__APP_STORAGE_LINODE_ACCESS_KEY
+    - _APP_STORAGE_LINODE_SECRET=$${secret}__APP_STORAGE_LINODE_SECRET
+    - _APP_STORAGE_LINODE_REGION=$${config}__APP_STORAGE_LINODE_REGION
+    - _APP_STORAGE_LINODE_BUCKET=$${config}__APP_STORAGE_LINODE_BUCKET
+    - _APP_STORAGE_WASABI_ACCESS_KEY=$${config}__APP_STORAGE_WASABI_ACCESS_KEY
+    - _APP_STORAGE_WASABI_SECRET=$${secret}__APP_STORAGE_WASABI_SECRET
+    - _APP_STORAGE_WASABI_REGION=$${config}__APP_STORAGE_WASABI_REGION
+    - _APP_STORAGE_WASABI_BUCKET=$${config}__APP_STORAGE_WASABI_BUCKET
+    - _APP_FUNCTIONS_SIZE_LIMIT=$${config}__APP_FUNCTIONS_SIZE_LIMIT
+    - _APP_FUNCTIONS_TIMEOUT=$${config}__APP_FUNCTIONS_TIMEOUT
+    - _APP_FUNCTIONS_BUILD_TIMEOUT=$${config}__APP_FUNCTIONS_BUILD_TIMEOUT
+    - _APP_FUNCTIONS_CPUS=$${config}__APP_FUNCTIONS_CPUS
+    - _APP_FUNCTIONS_MEMORY=$${config}__APP_FUNCTIONS_MEMORY
+    - _APP_FUNCTIONS_RUNTIMES=$${config}__APP_FUNCTIONS_RUNTIMES
+    - _APP_EXECUTOR_SECRET=$${secret}__APP_EXECUTOR_SECRET
+    - _APP_EXECUTOR_HOST=$${config}__APP_EXECUTOR_HOST
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    - _APP_STATSD_HOST=$${config}__APP_STATSD_HOST
+    - _APP_STATSD_PORT=$${config}__APP_STATSD_PORT
+    - _APP_MAINTENANCE_INTERVAL=$${config}__APP_MAINTENANCE_INTERVAL
+    - _APP_MAINTENANCE_RETENTION_EXECUTION=$${config}__APP_MAINTENANCE_RETENTION_EXECUTION
+    - _APP_MAINTENANCE_RETENTION_CACHE=$${config}__APP_MAINTENANCE_RETENTION_CACHE
+    - _APP_MAINTENANCE_RETENTION_ABUSE=$${config}__APP_MAINTENANCE_RETENTION_ABUSE
+    - _APP_MAINTENANCE_RETENTION_AUDIT=$${config}__APP_MAINTENANCE_RETENTION_AUDIT
+    - _APP_MAINTENANCE_RETENTION_USAGE_HOURLY=$${config}__APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+    - _APP_MAINTENANCE_RETENTION_SCHEDULES=$${config}__APP_MAINTENANCE_RETENTION_SCHEDULES
+    - _APP_SMS_PROVIDER=$${config}__APP_SMS_PROVIDER
+    - _APP_SMS_FROM=$${config}__APP_SMS_FROM
+    - _APP_GRAPHQL_MAX_BATCH_SIZE=$${config}__APP_GRAPHQL_MAX_BATCH_SIZE
+    - _APP_GRAPHQL_MAX_COMPLEXITY=$${config}__APP_GRAPHQL_MAX_COMPLEXITY
+    - _APP_GRAPHQL_MAX_DEPTH=$${config}__APP_GRAPHQL_MAX_DEPTH
+    - _APP_VCS_GITHUB_APP_NAME=$${config}__APP_VCS_GITHUB_APP_NAME
+    - _APP_VCS_GITHUB_PRIVATE_KEY=$${config}__APP_VCS_GITHUB_PRIVATE_KEY
+    - _APP_VCS_GITHUB_APP_ID=$${config}__APP_VCS_GITHUB_APP_ID
+    - _APP_VCS_GITHUB_WEBHOOK_SECRET=$${secret}__APP_VCS_GITHUB_WEBHOOK_SECRET
+    - _APP_VCS_GITHUB_CLIENT_SECRET=$${secret}__APP_VCS_GITHUB_CLIENT_SECRET
+    - _APP_VCS_GITHUB_CLIENT_ID=$${config}__APP_VCS_GITHUB_CLIENT_ID
+    - _APP_MIGRATIONS_FIREBASE_CLIENT_ID=$${config}__APP_MIGRATIONS_FIREBASE_CLIENT_ID
+    - _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET=$${secret}__APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+    - _APP_ASSISTANT_OPENAI_API_KEY=$${config}__APP_ASSISTANT_OPENAI_API_KEY
+    image: appwrite/appwrite:1.4.2
+    labels:
+    - traefik.enable=true
+    - traefik.constraint-label-stack=appwrite
+    - traefik.docker.network=appwrite
+    - traefik.http.services.appwrite_api.loadbalancer.server.port=80
+    - traefik.http.routers.appwrite_api_http.entrypoints=appwrite_web
+    - traefik.http.routers.appwrite_api_http.rule=PathPrefix(`/`)
+    - traefik.http.routers.appwrite_api_http.service=appwrite_api
+    - traefik.http.routers.appwrite_api_https.entrypoints=appwrite_websecure
+    - traefik.http.routers.appwrite_api_https.rule=PathPrefix(`/`)
+    - traefik.http.routers.appwrite_api_https.service=appwrite_api
+    - traefik.http.routers.appwrite_api_https.tls=true
+    logging: &id001
+      driver: json-file
+      options:
+        max-file: '5'
+        max-size: 10m
+    name: Appwrite
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes:
+    - appwrite-uploads:/storage/uploads:rw
+    - appwrite-cache:/storage/cache:rw
+    - appwrite-config:/storage/config:rw
+    - appwrite-certificates:/storage/certificates:rw
+    - appwrite-functions:/storage/functions:rw
+  $$id-appwrite-assistant:
+    container_name: appwrite-assistant
+    depends_on: []
+    environment:
+    - _APP_ASSISTANT_OPENAI_API_KEY=$${config}__APP_ASSISTANT_OPENAI_API_KEY
+    image: appwrite/assistant:0.2.0
+    logging: *id001
+    name: Appwrite-assistant
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-maintenance:
+    container_name: appwrite-maintenance
+    depends_on:
+    - redis
+    entrypoint: maintenance
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_DOMAIN=$${config}__APP_DOMAIN
+    - _APP_DOMAIN_TARGET=$${config}__APP_DOMAIN_TARGET
+    - _APP_DOMAIN_FUNCTIONS=$${config}__APP_DOMAIN_FUNCTIONS
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_MAINTENANCE_INTERVAL=$${config}__APP_MAINTENANCE_INTERVAL
+    - _APP_MAINTENANCE_RETENTION_EXECUTION=$${config}__APP_MAINTENANCE_RETENTION_EXECUTION
+    - _APP_MAINTENANCE_RETENTION_CACHE=$${config}__APP_MAINTENANCE_RETENTION_CACHE
+    - _APP_MAINTENANCE_RETENTION_ABUSE=$${config}__APP_MAINTENANCE_RETENTION_ABUSE
+    - _APP_MAINTENANCE_RETENTION_AUDIT=$${config}__APP_MAINTENANCE_RETENTION_AUDIT
+    - _APP_MAINTENANCE_RETENTION_USAGE_HOURLY=$${config}__APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+    - _APP_MAINTENANCE_RETENTION_SCHEDULES=$${config}__APP_MAINTENANCE_RETENTION_SCHEDULES
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-maintenance
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-realtime:
+    container_name: appwrite-realtime
+    depends_on:
+    - mariadb
+    - redis
+    entrypoint: realtime
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPTIONS_ABUSE=$${config}__APP_OPTIONS_ABUSE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_USAGE_STATS=$${config}__APP_USAGE_STATS
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    image: appwrite/appwrite:1.4.2
+    labels:
+    - traefik.enable=true
+    - traefik.constraint-label-stack=appwrite
+    - traefik.docker.network=appwrite
+    - traefik.http.services.appwrite_realtime.loadbalancer.server.port=80
+    - traefik.http.routers.appwrite_realtime_ws.entrypoints=appwrite_web
+    - traefik.http.routers.appwrite_realtime_ws.rule=PathPrefix(`/v1/realtime`)
+    - traefik.http.routers.appwrite_realtime_ws.service=appwrite_realtime
+    - traefik.http.routers.appwrite_realtime_wss.entrypoints=appwrite_websecure
+    - traefik.http.routers.appwrite_realtime_wss.rule=PathPrefix(`/v1/realtime`)
+    - traefik.http.routers.appwrite_realtime_wss.service=appwrite_realtime
+    - traefik.http.routers.appwrite_realtime_wss.tls=true
+    - traefik.http.routers.appwrite_realtime_wss.tls.certresolver=dns
+    logging: *id001
+    name: Appwrite-realtime
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-schedule:
+    container_name: appwrite-schedule
+    depends_on:
+    - mariadb
+    - redis
+    entrypoint: schedule
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-schedule
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-usage:
+    container_name: appwrite-usage
+    depends_on:
+    - influxdb
+    - mariadb
+    entrypoint: usage
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_INFLUXDB_HOST=$${config}__APP_INFLUXDB_HOST
+    - _APP_INFLUXDB_PORT=$${config}__APP_INFLUXDB_PORT
+    - _APP_USAGE_AGGREGATION_INTERVAL=$${config}__APP_USAGE_AGGREGATION_INTERVAL
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_USAGE_STATS=$${config}__APP_USAGE_STATS
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-usage
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-worker-audits:
+    container_name: appwrite-worker-audits
+    depends_on:
+    - redis
+    - mariadb
+    entrypoint: worker-audits
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-audits
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-worker-builds:
+    container_name: appwrite-worker-builds
+    depends_on:
+    - redis
+    - mariadb
+    entrypoint: worker-builds
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_EXECUTOR_SECRET=$${secret}__APP_EXECUTOR_SECRET
+    - _APP_EXECUTOR_HOST=$${config}__APP_EXECUTOR_HOST
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    - _APP_VCS_GITHUB_APP_NAME=$${config}__APP_VCS_GITHUB_APP_NAME
+    - _APP_VCS_GITHUB_PRIVATE_KEY=$${config}__APP_VCS_GITHUB_PRIVATE_KEY
+    - _APP_VCS_GITHUB_APP_ID=$${config}__APP_VCS_GITHUB_APP_ID
+    - _APP_FUNCTIONS_TIMEOUT=$${config}__APP_FUNCTIONS_TIMEOUT
+    - _APP_FUNCTIONS_BUILD_TIMEOUT=$${config}__APP_FUNCTIONS_BUILD_TIMEOUT
+    - _APP_FUNCTIONS_CPUS=$${config}__APP_FUNCTIONS_CPUS
+    - _APP_FUNCTIONS_MEMORY=$${config}__APP_FUNCTIONS_MEMORY
+    - _APP_OPTIONS_FORCE_HTTPS=$${config}__APP_OPTIONS_FORCE_HTTPS
+    - _APP_DOMAIN=$${config}__APP_DOMAIN
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-builds
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes:
+    - appwrite-functions:/storage/functions:rw
+    - appwrite-builds:/storage/builds:rw
+  $$id-appwrite-worker-certificates:
+    container_name: appwrite-worker-certificates
+    depends_on:
+    - redis
+    - mariadb
+    entrypoint: worker-certificates
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_DOMAIN=$${config}__APP_DOMAIN
+    - _APP_DOMAIN_TARGET=$${config}__APP_DOMAIN_TARGET
+    - _APP_DOMAIN_FUNCTIONS=$${config}__APP_DOMAIN_FUNCTIONS
+    - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS=$${config}__APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-certificates
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes:
+    - appwrite-config:/storage/config:rw
+    - appwrite-certificates:/storage/certificates:rw
+  $$id-appwrite-worker-databases:
+    container_name: appwrite-worker-databases
+    depends_on:
+    - redis
+    - mariadb
+    entrypoint: worker-databases
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-databases
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-worker-deletes:
+    container_name: appwrite-worker-deletes
+    depends_on:
+    - redis
+    - mariadb
+    entrypoint: worker-deletes
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_STORAGE_DEVICE=$${config}__APP_STORAGE_DEVICE
+    - _APP_STORAGE_S3_ACCESS_KEY=$${config}__APP_STORAGE_S3_ACCESS_KEY
+    - _APP_STORAGE_S3_SECRET=$${secret}__APP_STORAGE_S3_SECRET
+    - _APP_STORAGE_S3_REGION=$${config}__APP_STORAGE_S3_REGION
+    - _APP_STORAGE_S3_BUCKET=$${config}__APP_STORAGE_S3_BUCKET
+    - _APP_STORAGE_DO_SPACES_ACCESS_KEY=$${config}__APP_STORAGE_DO_SPACES_ACCESS_KEY
+    - _APP_STORAGE_DO_SPACES_SECRET=$${secret}__APP_STORAGE_DO_SPACES_SECRET
+    - _APP_STORAGE_DO_SPACES_REGION=$${config}__APP_STORAGE_DO_SPACES_REGION
+    - _APP_STORAGE_DO_SPACES_BUCKET=$${config}__APP_STORAGE_DO_SPACES_BUCKET
+    - _APP_STORAGE_BACKBLAZE_ACCESS_KEY=$${config}__APP_STORAGE_BACKBLAZE_ACCESS_KEY
+    - _APP_STORAGE_BACKBLAZE_SECRET=$${secret}__APP_STORAGE_BACKBLAZE_SECRET
+    - _APP_STORAGE_BACKBLAZE_REGION=$${config}__APP_STORAGE_BACKBLAZE_REGION
+    - _APP_STORAGE_BACKBLAZE_BUCKET=$${config}__APP_STORAGE_BACKBLAZE_BUCKET
+    - _APP_STORAGE_LINODE_ACCESS_KEY=$${config}__APP_STORAGE_LINODE_ACCESS_KEY
+    - _APP_STORAGE_LINODE_SECRET=$${secret}__APP_STORAGE_LINODE_SECRET
+    - _APP_STORAGE_LINODE_REGION=$${config}__APP_STORAGE_LINODE_REGION
+    - _APP_STORAGE_LINODE_BUCKET=$${config}__APP_STORAGE_LINODE_BUCKET
+    - _APP_STORAGE_WASABI_ACCESS_KEY=$${config}__APP_STORAGE_WASABI_ACCESS_KEY
+    - _APP_STORAGE_WASABI_SECRET=$${secret}__APP_STORAGE_WASABI_SECRET
+    - _APP_STORAGE_WASABI_REGION=$${config}__APP_STORAGE_WASABI_REGION
+    - _APP_STORAGE_WASABI_BUCKET=$${config}__APP_STORAGE_WASABI_BUCKET
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    - _APP_EXECUTOR_SECRET=$${secret}__APP_EXECUTOR_SECRET
+    - _APP_EXECUTOR_HOST=$${config}__APP_EXECUTOR_HOST
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-deletes
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes:
+    - appwrite-uploads:/storage/uploads:rw
+    - appwrite-cache:/storage/cache:rw
+    - appwrite-functions:/storage/functions:rw
+    - appwrite-builds:/storage/builds:rw
+    - appwrite-certificates:/storage/certificates:rw
+  $$id-appwrite-worker-functions:
+    container_name: appwrite-worker-functions
+    depends_on:
+    - redis
+    - mariadb
+    - openruntimes-executor
+    entrypoint: worker-functions
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_FUNCTIONS_TIMEOUT=$${config}__APP_FUNCTIONS_TIMEOUT
+    - _APP_FUNCTIONS_BUILD_TIMEOUT=$${config}__APP_FUNCTIONS_BUILD_TIMEOUT
+    - _APP_FUNCTIONS_CPUS=$${config}__APP_FUNCTIONS_CPUS
+    - _APP_FUNCTIONS_MEMORY=$${config}__APP_FUNCTIONS_MEMORY
+    - _APP_EXECUTOR_SECRET=$${secret}__APP_EXECUTOR_SECRET
+    - _APP_EXECUTOR_HOST=$${config}__APP_EXECUTOR_HOST
+    - _APP_USAGE_STATS=$${config}__APP_USAGE_STATS
+    - _APP_DOCKER_HUB_USERNAME=$${config}__APP_DOCKER_HUB_USERNAME
+    - _APP_DOCKER_HUB_PASSWORD=$${secret}__APP_DOCKER_HUB_PASSWORD
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-functions
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-worker-mails:
+    container_name: appwrite-worker-mails
+    depends_on:
+    - redis
+    entrypoint: worker-mails
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_SYSTEM_EMAIL_NAME=$${config}__APP_SYSTEM_EMAIL_NAME
+    - _APP_SYSTEM_EMAIL_ADDRESS=$${config}__APP_SYSTEM_EMAIL_ADDRESS
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_SMTP_HOST=$${config}__APP_SMTP_HOST
+    - _APP_SMTP_PORT=$${config}__APP_SMTP_PORT
+    - _APP_SMTP_SECURE=$${config}__APP_SMTP_SECURE
+    - _APP_SMTP_USERNAME=$${config}__APP_SMTP_USERNAME
+    - _APP_SMTP_PASSWORD=$${secret}__APP_SMTP_PASSWORD
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-mails
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-worker-messaging:
+    container_name: appwrite-worker-messaging
+    depends_on:
+    - redis
+    entrypoint: worker-messaging
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_SMS_PROVIDER=$${config}__APP_SMS_PROVIDER
+    - _APP_SMS_FROM=$${config}__APP_SMS_FROM
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-messaging
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-worker-migrations:
+    container_name: appwrite-worker-migrations
+    depends_on:
+    - mariadb
+    entrypoint: worker-migrations
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_DOMAIN=$${config}__APP_DOMAIN
+    - _APP_DOMAIN_TARGET=$${config}__APP_DOMAIN_TARGET
+    - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS=$${config}__APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_DB_HOST=$${config}__APP_DB_HOST
+    - _APP_DB_PORT=$${config}__APP_DB_PORT
+    - _APP_DB_SCHEMA=$${config}__APP_DB_SCHEMA
+    - _APP_DB_USER=$${config}__APP_DB_USER
+    - _APP_DB_PASS=$${secret}__APP_DB_PASS
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    - _APP_MIGRATIONS_FIREBASE_CLIENT_ID=$${config}__APP_MIGRATIONS_FIREBASE_CLIENT_ID
+    - _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET=$${secret}__APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-migrations
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-appwrite-worker-webhooks:
+    container_name: appwrite-worker-webhooks
+    depends_on:
+    - redis
+    - mariadb
+    entrypoint: worker-webhooks
+    environment:
+    - _APP_ENV=$${config}__APP_ENV
+    - _APP_WORKER_PER_CORE=$${config}__APP_WORKER_PER_CORE
+    - _APP_OPENSSL_KEY_V1=$${config}__APP_OPENSSL_KEY_V1
+    - _APP_SYSTEM_SECURITY_EMAIL_ADDRESS=$${config}__APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+    - _APP_REDIS_HOST=$${config}__APP_REDIS_HOST
+    - _APP_REDIS_PORT=$${config}__APP_REDIS_PORT
+    - _APP_REDIS_USER=$${config}__APP_REDIS_USER
+    - _APP_REDIS_PASS=$${secret}__APP_REDIS_PASS
+    - _APP_LOGGING_PROVIDER=$${config}__APP_LOGGING_PROVIDER
+    - _APP_LOGGING_CONFIG=$${config}__APP_LOGGING_CONFIG
+    image: appwrite/appwrite:1.4.2
+    logging: *id001
+    name: Appwrite-worker-webhooks
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-influxdb:
+    container_name: appwrite-influxdb
+    depends_on: []
+    environment: []
+    image: appwrite/influxdb:1.5.0
+    logging: *id001
+    name: Influxdb
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes:
+    - appwrite-influxdb:/var/lib/influxdb:rw
+  $$id-mariadb:
+    command: mysqld --innodb-flush-method=fsync
+    container_name: appwrite-mariadb
+    depends_on: []
+    environment:
+    - MYSQL_ROOT_PASSWORD=${_APP_DB_ROOT_PASS}=$${secret}_MYSQL_ROOT_PASSWORD=${_APP_DB_ROOT_PASS}
+    - MYSQL_DATABASE=${_APP_DB_SCHEMA}=$${config}_MYSQL_DATABASE=${_APP_DB_SCHEMA}
+    - MYSQL_USER=${_APP_DB_USER}=$${config}_MYSQL_USER=${_APP_DB_USER}
+    - MYSQL_PASSWORD=${_APP_DB_PASS}=$${secret}_MYSQL_PASSWORD=${_APP_DB_PASS}
+    image: mariadb:10.7
+    logging: *id001
+    name: Mariadb
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes:
+    - appwrite-mariadb:/var/lib/mysql:rw
+  $$id-openruntimes-executor:
+    container_name: openruntimes-executor
+    depends_on: []
+    environment:
+    - OPR_EXECUTOR_INACTIVE_TRESHOLD=$_APP_FUNCTIONS_INACTIVE_THRESHOLD=$${config}_OPR_EXECUTOR_INACTIVE_TRESHOLD=$_APP_FUNCTIONS_INACTIVE_THRESHOLD
+    - OPR_EXECUTOR_MAINTENANCE_INTERVAL=$_APP_FUNCTIONS_MAINTENANCE_INTERVAL=$${config}_OPR_EXECUTOR_MAINTENANCE_INTERVAL=$_APP_FUNCTIONS_MAINTENANCE_INTERVAL
+    - OPR_EXECUTOR_NETWORK=$_APP_FUNCTIONS_RUNTIMES_NETWORK=$${config}_OPR_EXECUTOR_NETWORK=$_APP_FUNCTIONS_RUNTIMES_NETWORK
+    - OPR_EXECUTOR_DOCKER_HUB_USERNAME=$_APP_DOCKER_HUB_USERNAME=$${config}_OPR_EXECUTOR_DOCKER_HUB_USERNAME=$_APP_DOCKER_HUB_USERNAME
+    - OPR_EXECUTOR_DOCKER_HUB_PASSWORD=$_APP_DOCKER_HUB_PASSWORD=$${secret}_OPR_EXECUTOR_DOCKER_HUB_PASSWORD=$_APP_DOCKER_HUB_PASSWORD
+    - OPR_EXECUTOR_ENV=$_APP_ENV=$${config}_OPR_EXECUTOR_ENV=$_APP_ENV
+    - OPR_EXECUTOR_RUNTIMES=$_APP_FUNCTIONS_RUNTIMES=$${config}_OPR_EXECUTOR_RUNTIMES=$_APP_FUNCTIONS_RUNTIMES
+    - OPR_EXECUTOR_SECRET=$_APP_EXECUTOR_SECRET=$${secret}_OPR_EXECUTOR_SECRET=$_APP_EXECUTOR_SECRET
+    - OPR_EXECUTOR_LOGGING_PROVIDER=$_APP_LOGGING_PROVIDER=$${config}_OPR_EXECUTOR_LOGGING_PROVIDER=$_APP_LOGGING_PROVIDER
+    - OPR_EXECUTOR_LOGGING_CONFIG=$_APP_LOGGING_CONFIG=$${config}_OPR_EXECUTOR_LOGGING_CONFIG=$_APP_LOGGING_CONFIG
+    - OPR_EXECUTOR_STORAGE_DEVICE=$_APP_STORAGE_DEVICE=$${config}_OPR_EXECUTOR_STORAGE_DEVICE=$_APP_STORAGE_DEVICE
+    - OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY=$_APP_STORAGE_S3_ACCESS_KEY=$${config}_OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY=$_APP_STORAGE_S3_ACCESS_KEY
+    - OPR_EXECUTOR_STORAGE_S3_SECRET=$_APP_STORAGE_S3_SECRET=$${secret}_OPR_EXECUTOR_STORAGE_S3_SECRET=$_APP_STORAGE_S3_SECRET
+    - OPR_EXECUTOR_STORAGE_S3_REGION=$_APP_STORAGE_S3_REGION=$${config}_OPR_EXECUTOR_STORAGE_S3_REGION=$_APP_STORAGE_S3_REGION
+    - OPR_EXECUTOR_STORAGE_S3_BUCKET=$_APP_STORAGE_S3_BUCKET=$${config}_OPR_EXECUTOR_STORAGE_S3_BUCKET=$_APP_STORAGE_S3_BUCKET
+    - OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY=$_APP_STORAGE_DO_SPACES_ACCESS_KEY=$${config}_OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY=$_APP_STORAGE_DO_SPACES_ACCESS_KEY
+    - OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET=$_APP_STORAGE_DO_SPACES_SECRET=$${secret}_OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET=$_APP_STORAGE_DO_SPACES_SECRET
+    - OPR_EXECUTOR_STORAGE_DO_SPACES_REGION=$_APP_STORAGE_DO_SPACES_REGION=$${config}_OPR_EXECUTOR_STORAGE_DO_SPACES_REGION=$_APP_STORAGE_DO_SPACES_REGION
+    - OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET=$_APP_STORAGE_DO_SPACES_BUCKET=$${config}_OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET=$_APP_STORAGE_DO_SPACES_BUCKET
+    - OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY=$_APP_STORAGE_BACKBLAZE_ACCESS_KEY=$${config}_OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY=$_APP_STORAGE_BACKBLAZE_ACCESS_KEY
+    - OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET=$_APP_STORAGE_BACKBLAZE_SECRET=$${secret}_OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET=$_APP_STORAGE_BACKBLAZE_SECRET
+    - OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION=$_APP_STORAGE_BACKBLAZE_REGION=$${config}_OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION=$_APP_STORAGE_BACKBLAZE_REGION
+    - OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET=$_APP_STORAGE_BACKBLAZE_BUCKET=$${config}_OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET=$_APP_STORAGE_BACKBLAZE_BUCKET
+    - OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY=$_APP_STORAGE_LINODE_ACCESS_KEY=$${config}_OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY=$_APP_STORAGE_LINODE_ACCESS_KEY
+    - OPR_EXECUTOR_STORAGE_LINODE_SECRET=$_APP_STORAGE_LINODE_SECRET=$${secret}_OPR_EXECUTOR_STORAGE_LINODE_SECRET=$_APP_STORAGE_LINODE_SECRET
+    - OPR_EXECUTOR_STORAGE_LINODE_REGION=$_APP_STORAGE_LINODE_REGION=$${config}_OPR_EXECUTOR_STORAGE_LINODE_REGION=$_APP_STORAGE_LINODE_REGION
+    - OPR_EXECUTOR_STORAGE_LINODE_BUCKET=$_APP_STORAGE_LINODE_BUCKET=$${config}_OPR_EXECUTOR_STORAGE_LINODE_BUCKET=$_APP_STORAGE_LINODE_BUCKET
+    - OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY=$_APP_STORAGE_WASABI_ACCESS_KEY=$${config}_OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY=$_APP_STORAGE_WASABI_ACCESS_KEY
+    - OPR_EXECUTOR_STORAGE_WASABI_SECRET=$_APP_STORAGE_WASABI_SECRET=$${secret}_OPR_EXECUTOR_STORAGE_WASABI_SECRET=$_APP_STORAGE_WASABI_SECRET
+    - OPR_EXECUTOR_STORAGE_WASABI_REGION=$_APP_STORAGE_WASABI_REGION=$${config}_OPR_EXECUTOR_STORAGE_WASABI_REGION=$_APP_STORAGE_WASABI_REGION
+    - OPR_EXECUTOR_STORAGE_WASABI_BUCKET=$_APP_STORAGE_WASABI_BUCKET=$${config}_OPR_EXECUTOR_STORAGE_WASABI_BUCKET=$_APP_STORAGE_WASABI_BUCKET
+    hostname: appwrite-executor
+    image: openruntimes/executor:0.4.0
+    logging: *id001
+    name: Openruntimes-executor
+    networks:
+    - appwrite
+    - runtimes
+    stop_signal: SIGINT
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - appwrite-builds:/storage/builds:rw
+    - appwrite-functions:/storage/functions:rw
+    - /tmp:/tmp:rw
+  $$id-redis:
+    command: 'redis-server --maxmemory            512mb --maxmemory-policy     allkeys-lru
+      --maxmemory-samples    5
+
+      '
+    container_name: appwrite-redis
+    depends_on: []
+    environment: []
+    image: redis:7.0.4-alpine
+    logging: *id001
+    name: Redis
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes:
+    - appwrite-redis:/data:rw
+  $$id-telegraf:
+    container_name: appwrite-telegraf
+    depends_on: []
+    environment:
+    - _APP_INFLUXDB_HOST=$${config}__APP_INFLUXDB_HOST
+    - _APP_INFLUXDB_PORT=$${config}__APP_INFLUXDB_PORT
+    image: appwrite/telegraf:1.4.0
+    logging: *id001
+    name: Telegraf
+    networks:
+    - appwrite
+    restart: unless-stopped
+    volumes: []
+  $$id-traefik:
+    command:
+    - --providers.file.directory=/storage/config
+    - --providers.file.watch=true
+    - --providers.docker=true
+    - --providers.docker.exposedByDefault=false
+    - --providers.docker.constraints=Label(`traefik.constraint-label-stack`,`appwrite`)
+    - --entrypoints.appwrite_web.address=:80
+    - --entrypoints.appwrite_websecure.address=:443
+    container_name: appwrite-traefik
+    depends_on:
+    - appwrite
+    environment: []
+    image: traefik:2.9
+    logging: *id001
+    name: Traefik
+    networks:
+    - gateway
+    - appwrite
+    ports:
+    - 80:80
+    - 443:443
+    restart: unless-stopped
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - appwrite-config:/storage/config:ro
+    - appwrite-certificates:/storage/certificates:ro
+templateVersion: 1.0.0
+type: appwrite
+variables:
+- defaultValue: ''
+  description: Appwrite _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_LOCALE setting.
+  id: $$config__APP_LOCALE
+  label: _APP_LOCALE
+  name: _APP_LOCALE
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_CONSOLE_WHITELIST_ROOT setting.
+  id: $$config__APP_CONSOLE_WHITELIST_ROOT
+  label: _APP_CONSOLE_WHITELIST_ROOT
+  name: _APP_CONSOLE_WHITELIST_ROOT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_CONSOLE_WHITELIST_EMAILS setting.
+  id: $$config__APP_CONSOLE_WHITELIST_EMAILS
+  label: _APP_CONSOLE_WHITELIST_EMAILS
+  name: _APP_CONSOLE_WHITELIST_EMAILS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_CONSOLE_WHITELIST_IPS setting.
+  id: $$config__APP_CONSOLE_WHITELIST_IPS
+  label: _APP_CONSOLE_WHITELIST_IPS
+  name: _APP_CONSOLE_WHITELIST_IPS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SYSTEM_EMAIL_NAME setting.
+  id: $$config__APP_SYSTEM_EMAIL_NAME
+  label: _APP_SYSTEM_EMAIL_NAME
+  name: _APP_SYSTEM_EMAIL_NAME
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SYSTEM_EMAIL_ADDRESS setting.
+  id: $$config__APP_SYSTEM_EMAIL_ADDRESS
+  label: _APP_SYSTEM_EMAIL_ADDRESS
+  name: _APP_SYSTEM_EMAIL_ADDRESS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SYSTEM_SECURITY_EMAIL_ADDRESS setting.
+  id: $$config__APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  label: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  name: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SYSTEM_RESPONSE_FORMAT setting.
+  id: $$config__APP_SYSTEM_RESPONSE_FORMAT
+  label: _APP_SYSTEM_RESPONSE_FORMAT
+  name: _APP_SYSTEM_RESPONSE_FORMAT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_OPTIONS_ABUSE setting.
+  id: $$config__APP_OPTIONS_ABUSE
+  label: _APP_OPTIONS_ABUSE
+  name: _APP_OPTIONS_ABUSE
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_OPTIONS_FORCE_HTTPS setting.
+  id: $$config__APP_OPTIONS_FORCE_HTTPS
+  label: _APP_OPTIONS_FORCE_HTTPS
+  name: _APP_OPTIONS_FORCE_HTTPS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_DOMAIN setting.
+  id: $$config__APP_DOMAIN
+  label: _APP_DOMAIN
+  name: _APP_DOMAIN
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_DOMAIN_TARGET setting.
+  id: $$config__APP_DOMAIN_TARGET
+  label: _APP_DOMAIN_TARGET
+  name: _APP_DOMAIN_TARGET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_DOMAIN_FUNCTIONS setting.
+  id: $$config__APP_DOMAIN_FUNCTIONS
+  label: _APP_DOMAIN_FUNCTIONS
+  name: _APP_DOMAIN_FUNCTIONS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SMTP_HOST setting.
+  id: $$config__APP_SMTP_HOST
+  label: _APP_SMTP_HOST
+  name: _APP_SMTP_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SMTP_PORT setting.
+  id: $$config__APP_SMTP_PORT
+  label: _APP_SMTP_PORT
+  name: _APP_SMTP_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SMTP_SECURE setting.
+  id: $$config__APP_SMTP_SECURE
+  label: _APP_SMTP_SECURE
+  name: _APP_SMTP_SECURE
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SMTP_USERNAME setting.
+  id: $$config__APP_SMTP_USERNAME
+  label: _APP_SMTP_USERNAME
+  name: _APP_SMTP_USERNAME
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SMTP_PASSWORD setting.
+  id: $$secret__APP_SMTP_PASSWORD
+  label: _APP_SMTP_PASSWORD
+  name: _APP_SMTP_PASSWORD
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_USAGE_STATS setting.
+  id: $$config__APP_USAGE_STATS
+  label: _APP_USAGE_STATS
+  name: _APP_USAGE_STATS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_INFLUXDB_HOST setting.
+  id: $$config__APP_INFLUXDB_HOST
+  label: _APP_INFLUXDB_HOST
+  name: _APP_INFLUXDB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_INFLUXDB_PORT setting.
+  id: $$config__APP_INFLUXDB_PORT
+  label: _APP_INFLUXDB_PORT
+  name: _APP_INFLUXDB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_LIMIT setting.
+  id: $$config__APP_STORAGE_LIMIT
+  label: _APP_STORAGE_LIMIT
+  name: _APP_STORAGE_LIMIT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_PREVIEW_LIMIT setting.
+  id: $$config__APP_STORAGE_PREVIEW_LIMIT
+  label: _APP_STORAGE_PREVIEW_LIMIT
+  name: _APP_STORAGE_PREVIEW_LIMIT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_ANTIVIRUS setting.
+  id: $$config__APP_STORAGE_ANTIVIRUS
+  label: _APP_STORAGE_ANTIVIRUS
+  name: _APP_STORAGE_ANTIVIRUS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_ANTIVIRUS_HOST setting.
+  id: $$config__APP_STORAGE_ANTIVIRUS_HOST
+  label: _APP_STORAGE_ANTIVIRUS_HOST
+  name: _APP_STORAGE_ANTIVIRUS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_ANTIVIRUS_PORT setting.
+  id: $$config__APP_STORAGE_ANTIVIRUS_PORT
+  label: _APP_STORAGE_ANTIVIRUS_PORT
+  name: _APP_STORAGE_ANTIVIRUS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_DEVICE setting.
+  id: $$config__APP_STORAGE_DEVICE
+  label: _APP_STORAGE_DEVICE
+  name: _APP_STORAGE_DEVICE
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_S3_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_S3_ACCESS_KEY
+  label: _APP_STORAGE_S3_ACCESS_KEY
+  name: _APP_STORAGE_S3_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_S3_SECRET setting.
+  id: $$secret__APP_STORAGE_S3_SECRET
+  label: _APP_STORAGE_S3_SECRET
+  name: _APP_STORAGE_S3_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_S3_REGION setting.
+  id: $$config__APP_STORAGE_S3_REGION
+  label: _APP_STORAGE_S3_REGION
+  name: _APP_STORAGE_S3_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_S3_BUCKET setting.
+  id: $$config__APP_STORAGE_S3_BUCKET
+  label: _APP_STORAGE_S3_BUCKET
+  name: _APP_STORAGE_S3_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_DO_SPACES_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_DO_SPACES_ACCESS_KEY
+  label: _APP_STORAGE_DO_SPACES_ACCESS_KEY
+  name: _APP_STORAGE_DO_SPACES_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_DO_SPACES_SECRET setting.
+  id: $$secret__APP_STORAGE_DO_SPACES_SECRET
+  label: _APP_STORAGE_DO_SPACES_SECRET
+  name: _APP_STORAGE_DO_SPACES_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_DO_SPACES_REGION setting.
+  id: $$config__APP_STORAGE_DO_SPACES_REGION
+  label: _APP_STORAGE_DO_SPACES_REGION
+  name: _APP_STORAGE_DO_SPACES_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_DO_SPACES_BUCKET setting.
+  id: $$config__APP_STORAGE_DO_SPACES_BUCKET
+  label: _APP_STORAGE_DO_SPACES_BUCKET
+  name: _APP_STORAGE_DO_SPACES_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_BACKBLAZE_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  label: _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  name: _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_BACKBLAZE_SECRET setting.
+  id: $$secret__APP_STORAGE_BACKBLAZE_SECRET
+  label: _APP_STORAGE_BACKBLAZE_SECRET
+  name: _APP_STORAGE_BACKBLAZE_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_BACKBLAZE_REGION setting.
+  id: $$config__APP_STORAGE_BACKBLAZE_REGION
+  label: _APP_STORAGE_BACKBLAZE_REGION
+  name: _APP_STORAGE_BACKBLAZE_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_BACKBLAZE_BUCKET setting.
+  id: $$config__APP_STORAGE_BACKBLAZE_BUCKET
+  label: _APP_STORAGE_BACKBLAZE_BUCKET
+  name: _APP_STORAGE_BACKBLAZE_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_LINODE_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_LINODE_ACCESS_KEY
+  label: _APP_STORAGE_LINODE_ACCESS_KEY
+  name: _APP_STORAGE_LINODE_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_LINODE_SECRET setting.
+  id: $$secret__APP_STORAGE_LINODE_SECRET
+  label: _APP_STORAGE_LINODE_SECRET
+  name: _APP_STORAGE_LINODE_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_LINODE_REGION setting.
+  id: $$config__APP_STORAGE_LINODE_REGION
+  label: _APP_STORAGE_LINODE_REGION
+  name: _APP_STORAGE_LINODE_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_LINODE_BUCKET setting.
+  id: $$config__APP_STORAGE_LINODE_BUCKET
+  label: _APP_STORAGE_LINODE_BUCKET
+  name: _APP_STORAGE_LINODE_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_WASABI_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_WASABI_ACCESS_KEY
+  label: _APP_STORAGE_WASABI_ACCESS_KEY
+  name: _APP_STORAGE_WASABI_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_WASABI_SECRET setting.
+  id: $$secret__APP_STORAGE_WASABI_SECRET
+  label: _APP_STORAGE_WASABI_SECRET
+  name: _APP_STORAGE_WASABI_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_WASABI_REGION setting.
+  id: $$config__APP_STORAGE_WASABI_REGION
+  label: _APP_STORAGE_WASABI_REGION
+  name: _APP_STORAGE_WASABI_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STORAGE_WASABI_BUCKET setting.
+  id: $$config__APP_STORAGE_WASABI_BUCKET
+  label: _APP_STORAGE_WASABI_BUCKET
+  name: _APP_STORAGE_WASABI_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_FUNCTIONS_SIZE_LIMIT setting.
+  id: $$config__APP_FUNCTIONS_SIZE_LIMIT
+  label: _APP_FUNCTIONS_SIZE_LIMIT
+  name: _APP_FUNCTIONS_SIZE_LIMIT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_FUNCTIONS_TIMEOUT setting.
+  id: $$config__APP_FUNCTIONS_TIMEOUT
+  label: _APP_FUNCTIONS_TIMEOUT
+  name: _APP_FUNCTIONS_TIMEOUT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_FUNCTIONS_BUILD_TIMEOUT setting.
+  id: $$config__APP_FUNCTIONS_BUILD_TIMEOUT
+  label: _APP_FUNCTIONS_BUILD_TIMEOUT
+  name: _APP_FUNCTIONS_BUILD_TIMEOUT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_FUNCTIONS_CPUS setting.
+  id: $$config__APP_FUNCTIONS_CPUS
+  label: _APP_FUNCTIONS_CPUS
+  name: _APP_FUNCTIONS_CPUS
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_FUNCTIONS_MEMORY setting.
+  id: $$config__APP_FUNCTIONS_MEMORY
+  label: _APP_FUNCTIONS_MEMORY
+  name: _APP_FUNCTIONS_MEMORY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_FUNCTIONS_RUNTIMES setting.
+  id: $$config__APP_FUNCTIONS_RUNTIMES
+  label: _APP_FUNCTIONS_RUNTIMES
+  name: _APP_FUNCTIONS_RUNTIMES
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_EXECUTOR_SECRET setting.
+  id: $$secret__APP_EXECUTOR_SECRET
+  label: _APP_EXECUTOR_SECRET
+  name: _APP_EXECUTOR_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_EXECUTOR_HOST setting.
+  id: $$config__APP_EXECUTOR_HOST
+  label: _APP_EXECUTOR_HOST
+  name: _APP_EXECUTOR_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STATSD_HOST setting.
+  id: $$config__APP_STATSD_HOST
+  label: _APP_STATSD_HOST
+  name: _APP_STATSD_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_STATSD_PORT setting.
+  id: $$config__APP_STATSD_PORT
+  label: _APP_STATSD_PORT
+  name: _APP_STATSD_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MAINTENANCE_INTERVAL setting.
+  id: $$config__APP_MAINTENANCE_INTERVAL
+  label: _APP_MAINTENANCE_INTERVAL
+  name: _APP_MAINTENANCE_INTERVAL
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MAINTENANCE_RETENTION_EXECUTION setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_EXECUTION
+  label: _APP_MAINTENANCE_RETENTION_EXECUTION
+  name: _APP_MAINTENANCE_RETENTION_EXECUTION
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MAINTENANCE_RETENTION_CACHE setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_CACHE
+  label: _APP_MAINTENANCE_RETENTION_CACHE
+  name: _APP_MAINTENANCE_RETENTION_CACHE
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MAINTENANCE_RETENTION_ABUSE setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_ABUSE
+  label: _APP_MAINTENANCE_RETENTION_ABUSE
+  name: _APP_MAINTENANCE_RETENTION_ABUSE
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MAINTENANCE_RETENTION_AUDIT setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_AUDIT
+  label: _APP_MAINTENANCE_RETENTION_AUDIT
+  name: _APP_MAINTENANCE_RETENTION_AUDIT
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MAINTENANCE_RETENTION_USAGE_HOURLY setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+  label: _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+  name: _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MAINTENANCE_RETENTION_SCHEDULES setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_SCHEDULES
+  label: _APP_MAINTENANCE_RETENTION_SCHEDULES
+  name: _APP_MAINTENANCE_RETENTION_SCHEDULES
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SMS_PROVIDER setting.
+  id: $$config__APP_SMS_PROVIDER
+  label: _APP_SMS_PROVIDER
+  name: _APP_SMS_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_SMS_FROM setting.
+  id: $$config__APP_SMS_FROM
+  label: _APP_SMS_FROM
+  name: _APP_SMS_FROM
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_GRAPHQL_MAX_BATCH_SIZE setting.
+  id: $$config__APP_GRAPHQL_MAX_BATCH_SIZE
+  label: _APP_GRAPHQL_MAX_BATCH_SIZE
+  name: _APP_GRAPHQL_MAX_BATCH_SIZE
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_GRAPHQL_MAX_COMPLEXITY setting.
+  id: $$config__APP_GRAPHQL_MAX_COMPLEXITY
+  label: _APP_GRAPHQL_MAX_COMPLEXITY
+  name: _APP_GRAPHQL_MAX_COMPLEXITY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_GRAPHQL_MAX_DEPTH setting.
+  id: $$config__APP_GRAPHQL_MAX_DEPTH
+  label: _APP_GRAPHQL_MAX_DEPTH
+  name: _APP_GRAPHQL_MAX_DEPTH
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_VCS_GITHUB_APP_NAME setting.
+  id: $$config__APP_VCS_GITHUB_APP_NAME
+  label: _APP_VCS_GITHUB_APP_NAME
+  name: _APP_VCS_GITHUB_APP_NAME
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_VCS_GITHUB_PRIVATE_KEY setting.
+  id: $$config__APP_VCS_GITHUB_PRIVATE_KEY
+  label: _APP_VCS_GITHUB_PRIVATE_KEY
+  name: _APP_VCS_GITHUB_PRIVATE_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_VCS_GITHUB_APP_ID setting.
+  id: $$config__APP_VCS_GITHUB_APP_ID
+  label: _APP_VCS_GITHUB_APP_ID
+  name: _APP_VCS_GITHUB_APP_ID
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_VCS_GITHUB_WEBHOOK_SECRET setting.
+  id: $$secret__APP_VCS_GITHUB_WEBHOOK_SECRET
+  label: _APP_VCS_GITHUB_WEBHOOK_SECRET
+  name: _APP_VCS_GITHUB_WEBHOOK_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_VCS_GITHUB_CLIENT_SECRET setting.
+  id: $$secret__APP_VCS_GITHUB_CLIENT_SECRET
+  label: _APP_VCS_GITHUB_CLIENT_SECRET
+  name: _APP_VCS_GITHUB_CLIENT_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_VCS_GITHUB_CLIENT_ID setting.
+  id: $$config__APP_VCS_GITHUB_CLIENT_ID
+  label: _APP_VCS_GITHUB_CLIENT_ID
+  name: _APP_VCS_GITHUB_CLIENT_ID
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MIGRATIONS_FIREBASE_CLIENT_ID setting.
+  id: $$config__APP_MIGRATIONS_FIREBASE_CLIENT_ID
+  label: _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+  name: _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET setting.
+  id: $$secret__APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+  label: _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+  name: _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite _APP_ASSISTANT_OPENAI_API_KEY setting.
+  id: $$config__APP_ASSISTANT_OPENAI_API_KEY
+  label: _APP_ASSISTANT_OPENAI_API_KEY
+  name: _APP_ASSISTANT_OPENAI_API_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_OPTIONS_ABUSE setting.
+  id: $$config__APP_OPTIONS_ABUSE
+  label: _APP_OPTIONS_ABUSE
+  name: _APP_OPTIONS_ABUSE
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_USAGE_STATS setting.
+  id: $$config__APP_USAGE_STATS
+  label: _APP_USAGE_STATS
+  name: _APP_USAGE_STATS
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-realtime _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-audits _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_SYSTEM_SECURITY_EMAIL_ADDRESS setting.
+  id: $$config__APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  label: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  name: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-webhooks _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_DEVICE setting.
+  id: $$config__APP_STORAGE_DEVICE
+  label: _APP_STORAGE_DEVICE
+  name: _APP_STORAGE_DEVICE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_S3_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_S3_ACCESS_KEY
+  label: _APP_STORAGE_S3_ACCESS_KEY
+  name: _APP_STORAGE_S3_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_S3_SECRET setting.
+  id: $$secret__APP_STORAGE_S3_SECRET
+  label: _APP_STORAGE_S3_SECRET
+  name: _APP_STORAGE_S3_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_S3_REGION setting.
+  id: $$config__APP_STORAGE_S3_REGION
+  label: _APP_STORAGE_S3_REGION
+  name: _APP_STORAGE_S3_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_S3_BUCKET setting.
+  id: $$config__APP_STORAGE_S3_BUCKET
+  label: _APP_STORAGE_S3_BUCKET
+  name: _APP_STORAGE_S3_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_DO_SPACES_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_DO_SPACES_ACCESS_KEY
+  label: _APP_STORAGE_DO_SPACES_ACCESS_KEY
+  name: _APP_STORAGE_DO_SPACES_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_DO_SPACES_SECRET setting.
+  id: $$secret__APP_STORAGE_DO_SPACES_SECRET
+  label: _APP_STORAGE_DO_SPACES_SECRET
+  name: _APP_STORAGE_DO_SPACES_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_DO_SPACES_REGION setting.
+  id: $$config__APP_STORAGE_DO_SPACES_REGION
+  label: _APP_STORAGE_DO_SPACES_REGION
+  name: _APP_STORAGE_DO_SPACES_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_DO_SPACES_BUCKET setting.
+  id: $$config__APP_STORAGE_DO_SPACES_BUCKET
+  label: _APP_STORAGE_DO_SPACES_BUCKET
+  name: _APP_STORAGE_DO_SPACES_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_BACKBLAZE_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  label: _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  name: _APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_BACKBLAZE_SECRET setting.
+  id: $$secret__APP_STORAGE_BACKBLAZE_SECRET
+  label: _APP_STORAGE_BACKBLAZE_SECRET
+  name: _APP_STORAGE_BACKBLAZE_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_BACKBLAZE_REGION setting.
+  id: $$config__APP_STORAGE_BACKBLAZE_REGION
+  label: _APP_STORAGE_BACKBLAZE_REGION
+  name: _APP_STORAGE_BACKBLAZE_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_BACKBLAZE_BUCKET setting.
+  id: $$config__APP_STORAGE_BACKBLAZE_BUCKET
+  label: _APP_STORAGE_BACKBLAZE_BUCKET
+  name: _APP_STORAGE_BACKBLAZE_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_LINODE_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_LINODE_ACCESS_KEY
+  label: _APP_STORAGE_LINODE_ACCESS_KEY
+  name: _APP_STORAGE_LINODE_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_LINODE_SECRET setting.
+  id: $$secret__APP_STORAGE_LINODE_SECRET
+  label: _APP_STORAGE_LINODE_SECRET
+  name: _APP_STORAGE_LINODE_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_LINODE_REGION setting.
+  id: $$config__APP_STORAGE_LINODE_REGION
+  label: _APP_STORAGE_LINODE_REGION
+  name: _APP_STORAGE_LINODE_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_LINODE_BUCKET setting.
+  id: $$config__APP_STORAGE_LINODE_BUCKET
+  label: _APP_STORAGE_LINODE_BUCKET
+  name: _APP_STORAGE_LINODE_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_WASABI_ACCESS_KEY setting.
+  id: $$config__APP_STORAGE_WASABI_ACCESS_KEY
+  label: _APP_STORAGE_WASABI_ACCESS_KEY
+  name: _APP_STORAGE_WASABI_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_WASABI_SECRET setting.
+  id: $$secret__APP_STORAGE_WASABI_SECRET
+  label: _APP_STORAGE_WASABI_SECRET
+  name: _APP_STORAGE_WASABI_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_WASABI_REGION setting.
+  id: $$config__APP_STORAGE_WASABI_REGION
+  label: _APP_STORAGE_WASABI_REGION
+  name: _APP_STORAGE_WASABI_REGION
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_STORAGE_WASABI_BUCKET setting.
+  id: $$config__APP_STORAGE_WASABI_BUCKET
+  label: _APP_STORAGE_WASABI_BUCKET
+  name: _APP_STORAGE_WASABI_BUCKET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_EXECUTOR_SECRET setting.
+  id: $$secret__APP_EXECUTOR_SECRET
+  label: _APP_EXECUTOR_SECRET
+  name: _APP_EXECUTOR_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-deletes _APP_EXECUTOR_HOST setting.
+  id: $$config__APP_EXECUTOR_HOST
+  label: _APP_EXECUTOR_HOST
+  name: _APP_EXECUTOR_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-databases _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_EXECUTOR_SECRET setting.
+  id: $$secret__APP_EXECUTOR_SECRET
+  label: _APP_EXECUTOR_SECRET
+  name: _APP_EXECUTOR_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_EXECUTOR_HOST setting.
+  id: $$config__APP_EXECUTOR_HOST
+  label: _APP_EXECUTOR_HOST
+  name: _APP_EXECUTOR_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_VCS_GITHUB_APP_NAME setting.
+  id: $$config__APP_VCS_GITHUB_APP_NAME
+  label: _APP_VCS_GITHUB_APP_NAME
+  name: _APP_VCS_GITHUB_APP_NAME
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_VCS_GITHUB_PRIVATE_KEY setting.
+  id: $$config__APP_VCS_GITHUB_PRIVATE_KEY
+  label: _APP_VCS_GITHUB_PRIVATE_KEY
+  name: _APP_VCS_GITHUB_PRIVATE_KEY
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_VCS_GITHUB_APP_ID setting.
+  id: $$config__APP_VCS_GITHUB_APP_ID
+  label: _APP_VCS_GITHUB_APP_ID
+  name: _APP_VCS_GITHUB_APP_ID
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_FUNCTIONS_TIMEOUT setting.
+  id: $$config__APP_FUNCTIONS_TIMEOUT
+  label: _APP_FUNCTIONS_TIMEOUT
+  name: _APP_FUNCTIONS_TIMEOUT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_FUNCTIONS_BUILD_TIMEOUT setting.
+  id: $$config__APP_FUNCTIONS_BUILD_TIMEOUT
+  label: _APP_FUNCTIONS_BUILD_TIMEOUT
+  name: _APP_FUNCTIONS_BUILD_TIMEOUT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_FUNCTIONS_CPUS setting.
+  id: $$config__APP_FUNCTIONS_CPUS
+  label: _APP_FUNCTIONS_CPUS
+  name: _APP_FUNCTIONS_CPUS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_FUNCTIONS_MEMORY setting.
+  id: $$config__APP_FUNCTIONS_MEMORY
+  label: _APP_FUNCTIONS_MEMORY
+  name: _APP_FUNCTIONS_MEMORY
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_OPTIONS_FORCE_HTTPS setting.
+  id: $$config__APP_OPTIONS_FORCE_HTTPS
+  label: _APP_OPTIONS_FORCE_HTTPS
+  name: _APP_OPTIONS_FORCE_HTTPS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-builds _APP_DOMAIN setting.
+  id: $$config__APP_DOMAIN
+  label: _APP_DOMAIN
+  name: _APP_DOMAIN
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_DOMAIN setting.
+  id: $$config__APP_DOMAIN
+  label: _APP_DOMAIN
+  name: _APP_DOMAIN
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_DOMAIN_TARGET setting.
+  id: $$config__APP_DOMAIN_TARGET
+  label: _APP_DOMAIN_TARGET
+  name: _APP_DOMAIN_TARGET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_DOMAIN_FUNCTIONS setting.
+  id: $$config__APP_DOMAIN_FUNCTIONS
+  label: _APP_DOMAIN_FUNCTIONS
+  name: _APP_DOMAIN_FUNCTIONS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_SYSTEM_SECURITY_EMAIL_ADDRESS setting.
+  id: $$config__APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  label: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  name: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-certificates _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_FUNCTIONS_TIMEOUT setting.
+  id: $$config__APP_FUNCTIONS_TIMEOUT
+  label: _APP_FUNCTIONS_TIMEOUT
+  name: _APP_FUNCTIONS_TIMEOUT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_FUNCTIONS_BUILD_TIMEOUT setting.
+  id: $$config__APP_FUNCTIONS_BUILD_TIMEOUT
+  label: _APP_FUNCTIONS_BUILD_TIMEOUT
+  name: _APP_FUNCTIONS_BUILD_TIMEOUT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_FUNCTIONS_CPUS setting.
+  id: $$config__APP_FUNCTIONS_CPUS
+  label: _APP_FUNCTIONS_CPUS
+  name: _APP_FUNCTIONS_CPUS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_FUNCTIONS_MEMORY setting.
+  id: $$config__APP_FUNCTIONS_MEMORY
+  label: _APP_FUNCTIONS_MEMORY
+  name: _APP_FUNCTIONS_MEMORY
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_EXECUTOR_SECRET setting.
+  id: $$secret__APP_EXECUTOR_SECRET
+  label: _APP_EXECUTOR_SECRET
+  name: _APP_EXECUTOR_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_EXECUTOR_HOST setting.
+  id: $$config__APP_EXECUTOR_HOST
+  label: _APP_EXECUTOR_HOST
+  name: _APP_EXECUTOR_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_USAGE_STATS setting.
+  id: $$config__APP_USAGE_STATS
+  label: _APP_USAGE_STATS
+  name: _APP_USAGE_STATS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_DOCKER_HUB_USERNAME setting.
+  id: $$config__APP_DOCKER_HUB_USERNAME
+  label: _APP_DOCKER_HUB_USERNAME
+  name: _APP_DOCKER_HUB_USERNAME
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_DOCKER_HUB_PASSWORD setting.
+  id: $$secret__APP_DOCKER_HUB_PASSWORD
+  label: _APP_DOCKER_HUB_PASSWORD
+  name: _APP_DOCKER_HUB_PASSWORD
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-functions _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_SYSTEM_EMAIL_NAME setting.
+  id: $$config__APP_SYSTEM_EMAIL_NAME
+  label: _APP_SYSTEM_EMAIL_NAME
+  name: _APP_SYSTEM_EMAIL_NAME
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_SYSTEM_EMAIL_ADDRESS setting.
+  id: $$config__APP_SYSTEM_EMAIL_ADDRESS
+  label: _APP_SYSTEM_EMAIL_ADDRESS
+  name: _APP_SYSTEM_EMAIL_ADDRESS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_SMTP_HOST setting.
+  id: $$config__APP_SMTP_HOST
+  label: _APP_SMTP_HOST
+  name: _APP_SMTP_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_SMTP_PORT setting.
+  id: $$config__APP_SMTP_PORT
+  label: _APP_SMTP_PORT
+  name: _APP_SMTP_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_SMTP_SECURE setting.
+  id: $$config__APP_SMTP_SECURE
+  label: _APP_SMTP_SECURE
+  name: _APP_SMTP_SECURE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_SMTP_USERNAME setting.
+  id: $$config__APP_SMTP_USERNAME
+  label: _APP_SMTP_USERNAME
+  name: _APP_SMTP_USERNAME
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_SMTP_PASSWORD setting.
+  id: $$secret__APP_SMTP_PASSWORD
+  label: _APP_SMTP_PASSWORD
+  name: _APP_SMTP_PASSWORD
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-mails _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_SMS_PROVIDER setting.
+  id: $$config__APP_SMS_PROVIDER
+  label: _APP_SMS_PROVIDER
+  name: _APP_SMS_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_SMS_FROM setting.
+  id: $$config__APP_SMS_FROM
+  label: _APP_SMS_FROM
+  name: _APP_SMS_FROM
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-messaging _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_DOMAIN setting.
+  id: $$config__APP_DOMAIN
+  label: _APP_DOMAIN
+  name: _APP_DOMAIN
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_DOMAIN_TARGET setting.
+  id: $$config__APP_DOMAIN_TARGET
+  label: _APP_DOMAIN_TARGET
+  name: _APP_DOMAIN_TARGET
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_SYSTEM_SECURITY_EMAIL_ADDRESS setting.
+  id: $$config__APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  label: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  name: _APP_SYSTEM_SECURITY_EMAIL_ADDRESS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_MIGRATIONS_FIREBASE_CLIENT_ID setting.
+  id: $$config__APP_MIGRATIONS_FIREBASE_CLIENT_ID
+  label: _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+  name: _APP_MIGRATIONS_FIREBASE_CLIENT_ID
+  required: true
+- defaultValue: ''
+  description: Appwrite-worker-migrations _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET setting.
+  id: $$secret__APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+  label: _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+  name: _APP_MIGRATIONS_FIREBASE_CLIENT_SECRET
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_DOMAIN setting.
+  id: $$config__APP_DOMAIN
+  label: _APP_DOMAIN
+  name: _APP_DOMAIN
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_DOMAIN_TARGET setting.
+  id: $$config__APP_DOMAIN_TARGET
+  label: _APP_DOMAIN_TARGET
+  name: _APP_DOMAIN_TARGET
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_DOMAIN_FUNCTIONS setting.
+  id: $$config__APP_DOMAIN_FUNCTIONS
+  label: _APP_DOMAIN_FUNCTIONS
+  name: _APP_DOMAIN_FUNCTIONS
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_MAINTENANCE_INTERVAL setting.
+  id: $$config__APP_MAINTENANCE_INTERVAL
+  label: _APP_MAINTENANCE_INTERVAL
+  name: _APP_MAINTENANCE_INTERVAL
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_MAINTENANCE_RETENTION_EXECUTION setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_EXECUTION
+  label: _APP_MAINTENANCE_RETENTION_EXECUTION
+  name: _APP_MAINTENANCE_RETENTION_EXECUTION
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_MAINTENANCE_RETENTION_CACHE setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_CACHE
+  label: _APP_MAINTENANCE_RETENTION_CACHE
+  name: _APP_MAINTENANCE_RETENTION_CACHE
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_MAINTENANCE_RETENTION_ABUSE setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_ABUSE
+  label: _APP_MAINTENANCE_RETENTION_ABUSE
+  name: _APP_MAINTENANCE_RETENTION_ABUSE
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_MAINTENANCE_RETENTION_AUDIT setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_AUDIT
+  label: _APP_MAINTENANCE_RETENTION_AUDIT
+  name: _APP_MAINTENANCE_RETENTION_AUDIT
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_MAINTENANCE_RETENTION_USAGE_HOURLY setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+  label: _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+  name: _APP_MAINTENANCE_RETENTION_USAGE_HOURLY
+  required: true
+- defaultValue: ''
+  description: Appwrite-maintenance _APP_MAINTENANCE_RETENTION_SCHEDULES setting.
+  id: $$config__APP_MAINTENANCE_RETENTION_SCHEDULES
+  label: _APP_MAINTENANCE_RETENTION_SCHEDULES
+  name: _APP_MAINTENANCE_RETENTION_SCHEDULES
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_OPENSSL_KEY_V1 setting.
+  id: $$config__APP_OPENSSL_KEY_V1
+  label: _APP_OPENSSL_KEY_V1
+  name: _APP_OPENSSL_KEY_V1
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_INFLUXDB_HOST setting.
+  id: $$config__APP_INFLUXDB_HOST
+  label: _APP_INFLUXDB_HOST
+  name: _APP_INFLUXDB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_INFLUXDB_PORT setting.
+  id: $$config__APP_INFLUXDB_PORT
+  label: _APP_INFLUXDB_PORT
+  name: _APP_INFLUXDB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_USAGE_AGGREGATION_INTERVAL setting.
+  id: $$config__APP_USAGE_AGGREGATION_INTERVAL
+  label: _APP_USAGE_AGGREGATION_INTERVAL
+  name: _APP_USAGE_AGGREGATION_INTERVAL
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_USAGE_STATS setting.
+  id: $$config__APP_USAGE_STATS
+  label: _APP_USAGE_STATS
+  name: _APP_USAGE_STATS
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_LOGGING_PROVIDER setting.
+  id: $$config__APP_LOGGING_PROVIDER
+  label: _APP_LOGGING_PROVIDER
+  name: _APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Appwrite-usage _APP_LOGGING_CONFIG setting.
+  id: $$config__APP_LOGGING_CONFIG
+  label: _APP_LOGGING_CONFIG
+  name: _APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_ENV setting.
+  id: $$config__APP_ENV
+  label: _APP_ENV
+  name: _APP_ENV
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_WORKER_PER_CORE setting.
+  id: $$config__APP_WORKER_PER_CORE
+  label: _APP_WORKER_PER_CORE
+  name: _APP_WORKER_PER_CORE
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_REDIS_HOST setting.
+  id: $$config__APP_REDIS_HOST
+  label: _APP_REDIS_HOST
+  name: _APP_REDIS_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_REDIS_PORT setting.
+  id: $$config__APP_REDIS_PORT
+  label: _APP_REDIS_PORT
+  name: _APP_REDIS_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_REDIS_USER setting.
+  id: $$config__APP_REDIS_USER
+  label: _APP_REDIS_USER
+  name: _APP_REDIS_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_REDIS_PASS setting.
+  id: $$secret__APP_REDIS_PASS
+  label: _APP_REDIS_PASS
+  name: _APP_REDIS_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_DB_HOST setting.
+  id: $$config__APP_DB_HOST
+  label: _APP_DB_HOST
+  name: _APP_DB_HOST
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_DB_PORT setting.
+  id: $$config__APP_DB_PORT
+  label: _APP_DB_PORT
+  name: _APP_DB_PORT
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_DB_SCHEMA setting.
+  id: $$config__APP_DB_SCHEMA
+  label: _APP_DB_SCHEMA
+  name: _APP_DB_SCHEMA
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_DB_USER setting.
+  id: $$config__APP_DB_USER
+  label: _APP_DB_USER
+  name: _APP_DB_USER
+  required: true
+- defaultValue: ''
+  description: Appwrite-schedule _APP_DB_PASS setting.
+  id: $$secret__APP_DB_PASS
+  label: _APP_DB_PASS
+  name: _APP_DB_PASS
+  required: true
+- defaultValue: ''
+  description: Appwrite-assistant _APP_ASSISTANT_OPENAI_API_KEY setting.
+  id: $$config__APP_ASSISTANT_OPENAI_API_KEY
+  label: _APP_ASSISTANT_OPENAI_API_KEY
+  name: _APP_ASSISTANT_OPENAI_API_KEY
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_INACTIVE_TRESHOLD=$_APP_FUNCTIONS_INACTIVE_THRESHOLD
+    setting.
+  id: $$config_OPR_EXECUTOR_INACTIVE_TRESHOLD=$_APP_FUNCTIONS_INACTIVE_THRESHOLD
+  label: OPR_EXECUTOR_INACTIVE_TRESHOLD=$_APP_FUNCTIONS_INACTIVE_THRESHOLD
+  name: OPR_EXECUTOR_INACTIVE_TRESHOLD=$_APP_FUNCTIONS_INACTIVE_THRESHOLD
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_MAINTENANCE_INTERVAL=$_APP_FUNCTIONS_MAINTENANCE_INTERVAL
+    setting.
+  id: $$config_OPR_EXECUTOR_MAINTENANCE_INTERVAL=$_APP_FUNCTIONS_MAINTENANCE_INTERVAL
+  label: OPR_EXECUTOR_MAINTENANCE_INTERVAL=$_APP_FUNCTIONS_MAINTENANCE_INTERVAL
+  name: OPR_EXECUTOR_MAINTENANCE_INTERVAL=$_APP_FUNCTIONS_MAINTENANCE_INTERVAL
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_NETWORK=$_APP_FUNCTIONS_RUNTIMES_NETWORK
+    setting.
+  id: $$config_OPR_EXECUTOR_NETWORK=$_APP_FUNCTIONS_RUNTIMES_NETWORK
+  label: OPR_EXECUTOR_NETWORK=$_APP_FUNCTIONS_RUNTIMES_NETWORK
+  name: OPR_EXECUTOR_NETWORK=$_APP_FUNCTIONS_RUNTIMES_NETWORK
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_DOCKER_HUB_USERNAME=$_APP_DOCKER_HUB_USERNAME
+    setting.
+  id: $$config_OPR_EXECUTOR_DOCKER_HUB_USERNAME=$_APP_DOCKER_HUB_USERNAME
+  label: OPR_EXECUTOR_DOCKER_HUB_USERNAME=$_APP_DOCKER_HUB_USERNAME
+  name: OPR_EXECUTOR_DOCKER_HUB_USERNAME=$_APP_DOCKER_HUB_USERNAME
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_DOCKER_HUB_PASSWORD=$_APP_DOCKER_HUB_PASSWORD
+    setting.
+  id: $$secret_OPR_EXECUTOR_DOCKER_HUB_PASSWORD=$_APP_DOCKER_HUB_PASSWORD
+  label: OPR_EXECUTOR_DOCKER_HUB_PASSWORD=$_APP_DOCKER_HUB_PASSWORD
+  name: OPR_EXECUTOR_DOCKER_HUB_PASSWORD=$_APP_DOCKER_HUB_PASSWORD
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_ENV=$_APP_ENV setting.
+  id: $$config_OPR_EXECUTOR_ENV=$_APP_ENV
+  label: OPR_EXECUTOR_ENV=$_APP_ENV
+  name: OPR_EXECUTOR_ENV=$_APP_ENV
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_RUNTIMES=$_APP_FUNCTIONS_RUNTIMES
+    setting.
+  id: $$config_OPR_EXECUTOR_RUNTIMES=$_APP_FUNCTIONS_RUNTIMES
+  label: OPR_EXECUTOR_RUNTIMES=$_APP_FUNCTIONS_RUNTIMES
+  name: OPR_EXECUTOR_RUNTIMES=$_APP_FUNCTIONS_RUNTIMES
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_SECRET=$_APP_EXECUTOR_SECRET setting.
+  id: $$secret_OPR_EXECUTOR_SECRET=$_APP_EXECUTOR_SECRET
+  label: OPR_EXECUTOR_SECRET=$_APP_EXECUTOR_SECRET
+  name: OPR_EXECUTOR_SECRET=$_APP_EXECUTOR_SECRET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_LOGGING_PROVIDER=$_APP_LOGGING_PROVIDER
+    setting.
+  id: $$config_OPR_EXECUTOR_LOGGING_PROVIDER=$_APP_LOGGING_PROVIDER
+  label: OPR_EXECUTOR_LOGGING_PROVIDER=$_APP_LOGGING_PROVIDER
+  name: OPR_EXECUTOR_LOGGING_PROVIDER=$_APP_LOGGING_PROVIDER
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_LOGGING_CONFIG=$_APP_LOGGING_CONFIG
+    setting.
+  id: $$config_OPR_EXECUTOR_LOGGING_CONFIG=$_APP_LOGGING_CONFIG
+  label: OPR_EXECUTOR_LOGGING_CONFIG=$_APP_LOGGING_CONFIG
+  name: OPR_EXECUTOR_LOGGING_CONFIG=$_APP_LOGGING_CONFIG
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_DEVICE=$_APP_STORAGE_DEVICE
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_DEVICE=$_APP_STORAGE_DEVICE
+  label: OPR_EXECUTOR_STORAGE_DEVICE=$_APP_STORAGE_DEVICE
+  name: OPR_EXECUTOR_STORAGE_DEVICE=$_APP_STORAGE_DEVICE
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY=$_APP_STORAGE_S3_ACCESS_KEY
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY=$_APP_STORAGE_S3_ACCESS_KEY
+  label: OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY=$_APP_STORAGE_S3_ACCESS_KEY
+  name: OPR_EXECUTOR_STORAGE_S3_ACCESS_KEY=$_APP_STORAGE_S3_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_S3_SECRET=$_APP_STORAGE_S3_SECRET
+    setting.
+  id: $$secret_OPR_EXECUTOR_STORAGE_S3_SECRET=$_APP_STORAGE_S3_SECRET
+  label: OPR_EXECUTOR_STORAGE_S3_SECRET=$_APP_STORAGE_S3_SECRET
+  name: OPR_EXECUTOR_STORAGE_S3_SECRET=$_APP_STORAGE_S3_SECRET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_S3_REGION=$_APP_STORAGE_S3_REGION
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_S3_REGION=$_APP_STORAGE_S3_REGION
+  label: OPR_EXECUTOR_STORAGE_S3_REGION=$_APP_STORAGE_S3_REGION
+  name: OPR_EXECUTOR_STORAGE_S3_REGION=$_APP_STORAGE_S3_REGION
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_S3_BUCKET=$_APP_STORAGE_S3_BUCKET
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_S3_BUCKET=$_APP_STORAGE_S3_BUCKET
+  label: OPR_EXECUTOR_STORAGE_S3_BUCKET=$_APP_STORAGE_S3_BUCKET
+  name: OPR_EXECUTOR_STORAGE_S3_BUCKET=$_APP_STORAGE_S3_BUCKET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY=$_APP_STORAGE_DO_SPACES_ACCESS_KEY
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY=$_APP_STORAGE_DO_SPACES_ACCESS_KEY
+  label: OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY=$_APP_STORAGE_DO_SPACES_ACCESS_KEY
+  name: OPR_EXECUTOR_STORAGE_DO_SPACES_ACCESS_KEY=$_APP_STORAGE_DO_SPACES_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET=$_APP_STORAGE_DO_SPACES_SECRET
+    setting.
+  id: $$secret_OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET=$_APP_STORAGE_DO_SPACES_SECRET
+  label: OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET=$_APP_STORAGE_DO_SPACES_SECRET
+  name: OPR_EXECUTOR_STORAGE_DO_SPACES_SECRET=$_APP_STORAGE_DO_SPACES_SECRET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_DO_SPACES_REGION=$_APP_STORAGE_DO_SPACES_REGION
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_DO_SPACES_REGION=$_APP_STORAGE_DO_SPACES_REGION
+  label: OPR_EXECUTOR_STORAGE_DO_SPACES_REGION=$_APP_STORAGE_DO_SPACES_REGION
+  name: OPR_EXECUTOR_STORAGE_DO_SPACES_REGION=$_APP_STORAGE_DO_SPACES_REGION
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET=$_APP_STORAGE_DO_SPACES_BUCKET
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET=$_APP_STORAGE_DO_SPACES_BUCKET
+  label: OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET=$_APP_STORAGE_DO_SPACES_BUCKET
+  name: OPR_EXECUTOR_STORAGE_DO_SPACES_BUCKET=$_APP_STORAGE_DO_SPACES_BUCKET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY=$_APP_STORAGE_BACKBLAZE_ACCESS_KEY
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY=$_APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  label: OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY=$_APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  name: OPR_EXECUTOR_STORAGE_BACKBLAZE_ACCESS_KEY=$_APP_STORAGE_BACKBLAZE_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET=$_APP_STORAGE_BACKBLAZE_SECRET
+    setting.
+  id: $$secret_OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET=$_APP_STORAGE_BACKBLAZE_SECRET
+  label: OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET=$_APP_STORAGE_BACKBLAZE_SECRET
+  name: OPR_EXECUTOR_STORAGE_BACKBLAZE_SECRET=$_APP_STORAGE_BACKBLAZE_SECRET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION=$_APP_STORAGE_BACKBLAZE_REGION
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION=$_APP_STORAGE_BACKBLAZE_REGION
+  label: OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION=$_APP_STORAGE_BACKBLAZE_REGION
+  name: OPR_EXECUTOR_STORAGE_BACKBLAZE_REGION=$_APP_STORAGE_BACKBLAZE_REGION
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET=$_APP_STORAGE_BACKBLAZE_BUCKET
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET=$_APP_STORAGE_BACKBLAZE_BUCKET
+  label: OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET=$_APP_STORAGE_BACKBLAZE_BUCKET
+  name: OPR_EXECUTOR_STORAGE_BACKBLAZE_BUCKET=$_APP_STORAGE_BACKBLAZE_BUCKET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY=$_APP_STORAGE_LINODE_ACCESS_KEY
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY=$_APP_STORAGE_LINODE_ACCESS_KEY
+  label: OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY=$_APP_STORAGE_LINODE_ACCESS_KEY
+  name: OPR_EXECUTOR_STORAGE_LINODE_ACCESS_KEY=$_APP_STORAGE_LINODE_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_LINODE_SECRET=$_APP_STORAGE_LINODE_SECRET
+    setting.
+  id: $$secret_OPR_EXECUTOR_STORAGE_LINODE_SECRET=$_APP_STORAGE_LINODE_SECRET
+  label: OPR_EXECUTOR_STORAGE_LINODE_SECRET=$_APP_STORAGE_LINODE_SECRET
+  name: OPR_EXECUTOR_STORAGE_LINODE_SECRET=$_APP_STORAGE_LINODE_SECRET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_LINODE_REGION=$_APP_STORAGE_LINODE_REGION
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_LINODE_REGION=$_APP_STORAGE_LINODE_REGION
+  label: OPR_EXECUTOR_STORAGE_LINODE_REGION=$_APP_STORAGE_LINODE_REGION
+  name: OPR_EXECUTOR_STORAGE_LINODE_REGION=$_APP_STORAGE_LINODE_REGION
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_LINODE_BUCKET=$_APP_STORAGE_LINODE_BUCKET
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_LINODE_BUCKET=$_APP_STORAGE_LINODE_BUCKET
+  label: OPR_EXECUTOR_STORAGE_LINODE_BUCKET=$_APP_STORAGE_LINODE_BUCKET
+  name: OPR_EXECUTOR_STORAGE_LINODE_BUCKET=$_APP_STORAGE_LINODE_BUCKET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY=$_APP_STORAGE_WASABI_ACCESS_KEY
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY=$_APP_STORAGE_WASABI_ACCESS_KEY
+  label: OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY=$_APP_STORAGE_WASABI_ACCESS_KEY
+  name: OPR_EXECUTOR_STORAGE_WASABI_ACCESS_KEY=$_APP_STORAGE_WASABI_ACCESS_KEY
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_WASABI_SECRET=$_APP_STORAGE_WASABI_SECRET
+    setting.
+  id: $$secret_OPR_EXECUTOR_STORAGE_WASABI_SECRET=$_APP_STORAGE_WASABI_SECRET
+  label: OPR_EXECUTOR_STORAGE_WASABI_SECRET=$_APP_STORAGE_WASABI_SECRET
+  name: OPR_EXECUTOR_STORAGE_WASABI_SECRET=$_APP_STORAGE_WASABI_SECRET
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_WASABI_REGION=$_APP_STORAGE_WASABI_REGION
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_WASABI_REGION=$_APP_STORAGE_WASABI_REGION
+  label: OPR_EXECUTOR_STORAGE_WASABI_REGION=$_APP_STORAGE_WASABI_REGION
+  name: OPR_EXECUTOR_STORAGE_WASABI_REGION=$_APP_STORAGE_WASABI_REGION
+  required: true
+- defaultValue: ''
+  description: Openruntimes-executor OPR_EXECUTOR_STORAGE_WASABI_BUCKET=$_APP_STORAGE_WASABI_BUCKET
+    setting.
+  id: $$config_OPR_EXECUTOR_STORAGE_WASABI_BUCKET=$_APP_STORAGE_WASABI_BUCKET
+  label: OPR_EXECUTOR_STORAGE_WASABI_BUCKET=$_APP_STORAGE_WASABI_BUCKET
+  name: OPR_EXECUTOR_STORAGE_WASABI_BUCKET=$_APP_STORAGE_WASABI_BUCKET
+  required: true
+- defaultValue: ''
+  description: Mariadb MYSQL_ROOT_PASSWORD=${_APP_DB_ROOT_PASS} setting.
+  id: $$secret_MYSQL_ROOT_PASSWORD=${_APP_DB_ROOT_PASS}
+  label: MYSQL_ROOT_PASSWORD=${_APP_DB_ROOT_PASS}
+  name: MYSQL_ROOT_PASSWORD=${_APP_DB_ROOT_PASS}
+  required: true
+- defaultValue: ''
+  description: Mariadb MYSQL_DATABASE=${_APP_DB_SCHEMA} setting.
+  id: $$config_MYSQL_DATABASE=${_APP_DB_SCHEMA}
+  label: MYSQL_DATABASE=${_APP_DB_SCHEMA}
+  name: MYSQL_DATABASE=${_APP_DB_SCHEMA}
+  required: true
+- defaultValue: ''
+  description: Mariadb MYSQL_USER=${_APP_DB_USER} setting.
+  id: $$config_MYSQL_USER=${_APP_DB_USER}
+  label: MYSQL_USER=${_APP_DB_USER}
+  name: MYSQL_USER=${_APP_DB_USER}
+  required: true
+- defaultValue: ''
+  description: Mariadb MYSQL_PASSWORD=${_APP_DB_PASS} setting.
+  id: $$secret_MYSQL_PASSWORD=${_APP_DB_PASS}
+  label: MYSQL_PASSWORD=${_APP_DB_PASS}
+  name: MYSQL_PASSWORD=${_APP_DB_PASS}
+  required: true
+- defaultValue: ''
+  description: Telegraf _APP_INFLUXDB_HOST setting.
+  id: $$config__APP_INFLUXDB_HOST
+  label: _APP_INFLUXDB_HOST
+  name: _APP_INFLUXDB_HOST
+  required: true
+- defaultValue: ''
+  description: Telegraf _APP_INFLUXDB_PORT setting.
+  id: $$config__APP_INFLUXDB_PORT
+  label: _APP_INFLUXDB_PORT
+  name: _APP_INFLUXDB_PORT
+  required: true
